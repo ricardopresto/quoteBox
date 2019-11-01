@@ -37,15 +37,16 @@ app.get("/quotes/random", async (req, res) => {
 	res.send(data[index]);
 });
 
-app.post("/quotes", async (req, res) => {
+app.post("/quotes/add", async (req, res) => {
 	const quotes = await getQuotes();
 	quotes.insertOne(req.body);
-	res.redirect("/quotes");
+	res.send("Inserted");
 });
 
-app.delete("/quotes/:id", async (req, res) => {
+app.delete("/quotes/delete/:id", async (req, res) => {
 	const quotes = await getQuotes();
 	await quotes.deleteOne({ _id: new mongodb.ObjectID(req.params.id) });
+	res.send("Deleted");
 });
 
 async function getQuotes() {
