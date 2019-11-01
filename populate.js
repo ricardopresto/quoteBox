@@ -16,7 +16,7 @@ async function addQuote(quote) {
 	quotes.insertMany(quote);
 }
 
-const fileContents = fs.readFileSync("./sample8.json", "utf8");
+const fileContents = fs.readFileSync("./sample1.json", "utf8");
 
 try {
 	var data = JSON.parse(fileContents);

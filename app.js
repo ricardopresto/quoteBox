@@ -8,8 +8,7 @@ const app = express();
 const port = 8000;
 
 const dbName = "quoteBox";
-const url =
-	"mongodb+srv://ricardopresto:ricardo123@cluster0-yuyny.gcp.mongodb.net/quoteBox?retryWrites=true&w=majority";
+const url = `mongodb+srv://ricardopresto:ricardo123@cluster0-yuyny.gcp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
