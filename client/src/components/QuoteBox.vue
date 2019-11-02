@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Quote />
+    <Quote v-for="quote in quotes" :key="quote._id" :quote="quote.quote" :author="quote.author" />
   </div>
 </template>
 
@@ -10,7 +10,8 @@ export default {
   name: "QuoteBox",
   components: {
     Quote
-  }
+  },
+  props: ["quotes"]
 };
 </script>
 

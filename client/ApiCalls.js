@@ -12,19 +12,19 @@ class ApiCalls {
 	}
 
 	static async wordSearch(word) {
-		//var data = "";
+		var data = "";
 		await axios.get(`${url}/search/${word}`).then(res => {
-			console.log(res.data);
+			data = res.data;
 		});
-		//return data;
+		return data;
 	}
 
 	static async authorSearch(author) {
-		//var data = "";
+		var data = "";
 		await axios.get(`${url}/author/${author}`).then(res => {
-			console.log(res.data);
+			data = res.data;
 		});
-		//return data;
+		return data;
 	}
 }
 
