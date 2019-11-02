@@ -32,8 +32,7 @@ export default {
     async randomQuote() {
       const data = await ApiCalls.getRandomQuote();
       console.log(data);
-      this.quotes = [];
-      this.quotes.push(data);
+      this.quotes = data;
     },
     async authorSearch() {
       const data = await ApiCalls.authorSearch(this.author);

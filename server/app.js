@@ -32,9 +32,8 @@ app.get("/quotes/author/:word", async (req, res) => {
 
 app.get("/quotes/random", async (req, res) => {
 	const quotes = await getQuotes();
-	const data = await quotes.find({}).toArray();
-	var index = Math.floor(Math.random() * data.length);
-	res.send(data[index]);
+	const data = await quotes.aggregate([{ $sample: { size: 1 } }]).toArray();
+	res.send(data);
 });
 
 app.post("/quotes/add", async (req, res) => {
