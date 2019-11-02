@@ -24,6 +24,7 @@ export default {
   border: 1px solid grey;
   border-radius: 8px;
   margin: 5px;
+  background-image: url("paper.jpg");
 }
 #quote {
   font-size: 1.1em;

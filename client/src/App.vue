@@ -35,16 +35,20 @@ export default {
       this.quotes = data;
     },
     async authorSearch() {
-      const data = await ApiCalls.authorSearch(this.author);
-      console.log(data);
-      this.quotes = data;
-      this.author = "";
+      if (this.author != "") {
+        const data = await ApiCalls.authorSearch(this.author);
+        console.log(data);
+        this.quotes = data;
+        this.author = "";
+      }
     },
     async wordSearch() {
-      const data = await ApiCalls.wordSearch(this.word);
-      console.log(data);
-      this.quotes = data;
-      this.word = "";
+      if (this.word != "") {
+        const data = await ApiCalls.wordSearch(this.word);
+        console.log(data);
+        this.quotes = data;
+        this.word = "";
+      }
     }
   }
 };
