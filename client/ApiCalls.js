@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:8000/quotes";
+const url = "http://localhost:8050/quotes";
 
 class ApiCalls {
 	static async getRandomQuote() {
@@ -25,6 +25,10 @@ class ApiCalls {
 			data = res.data;
 		});
 		return data;
+	}
+
+	static async registerUser(username, password) {
+		await axios.post(`${url}/register/${username}/${password}`);
 	}
 }
 

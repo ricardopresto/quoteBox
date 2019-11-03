@@ -5,7 +5,7 @@ const cors = require("cors");
 
 const app = express();
 
-const port = 8000;
+const port = 8050;
 
 const dbName = "quoteBox";
 const url = `mongodb+srv://ricardopresto:ricardo123@cluster0-yuyny.gcp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
@@ -36,6 +36,16 @@ app.get("/quotes/random", async (req, res) => {
 	res.send(data);
 });
 
+app.post("/quotes/register/:username/:password", async (req, res) => {
+	const users = await getUsers();
+	var newUser = {
+		username: req.params.username,
+		password: req.params.password
+	};
+	users.insertOne(newUser);
+	res.status(201).send("User Created");
+});
+
 app.post("/quotes/add", async (req, res) => {
 	const quotes = await getQuotes();
 	quotes.insertOne(req.body);
@@ -53,6 +63,13 @@ async function getQuotes() {
 		useUnifiedTopology: true
 	});
 	return client.db(dbName).collection("main");
+}
+
+async function getUsers() {
+	const client = await mongodb.MongoClient.connect(url, {
+		useUnifiedTopology: true
+	});
+	return client.db(dbName).collection("users");
 }
 
 app.listen(port, () => {
