@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+//Search by keyword
 app.get("/quotes/search/:word", async (req, res) => {
 	const quotes = await getQuotes();
 	const data = await quotes
@@ -22,6 +23,7 @@ app.get("/quotes/search/:word", async (req, res) => {
 	res.send(data);
 });
 
+//Search by author
 app.get("/quotes/author/:word", async (req, res) => {
 	const quotes = await getQuotes();
 	const data = await quotes
@@ -30,13 +32,20 @@ app.get("/quotes/author/:word", async (req, res) => {
 	res.send(data);
 });
 
+//Get random quote
 app.get("/quotes/random", async (req, res) => {
 	const quotes = await getQuotes();
 	const data = await quotes.aggregate([{ $sample: { size: 1 } }]).toArray();
 	res.send(data);
 });
 
+//Register new user
 app.post("/quotes/register/:username/:password", async (req, res) => {
+	const client = await mongodb.MongoClient.connect(url, {
+		useUnifiedTopology: true
+	});
+	client.db(dbName).createCollection(`user.${req.params.username}`);
+
 	const users = await getUsers();
 	var newUser = {
 		username: req.params.username,
@@ -46,8 +55,10 @@ app.post("/quotes/register/:username/:password", async (req, res) => {
 	res.status(201).send("User Created");
 });
 
-app.post("/quotes/add", async (req, res) => {
-	const quotes = await getQuotes();
+//Add to user collection
+app.post("/quotes/add/:user", async (req, res) => {
+	const quotes = await getMyQuotes(req.params.user);
+	req.body._id = new mongodb.ObjectID(req.body.id);
 	quotes.insertOne(req.body);
 	res.send("Inserted");
 });
@@ -63,6 +74,13 @@ async function getQuotes() {
 		useUnifiedTopology: true
 	});
 	return client.db(dbName).collection("main");
+}
+
+async function getMyQuotes(user) {
+	const client = await mongodb.MongoClient.connect(url, {
+		useUnifiedTopology: true
+	});
+	return client.db(dbName).collection(user);
 }
 
 async function getUsers() {

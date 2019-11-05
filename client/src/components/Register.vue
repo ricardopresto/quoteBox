@@ -4,11 +4,23 @@
       <div id="form">
         <div class="input">
           <label for="username">Username:</label>
-          <input type="text" name="username" placeholder="Enter Username..." v-model="username" />
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter Username..."
+            v-model="username"
+            @keyup.enter="registerUser"
+          />
         </div>
         <div class="input">
           <label for="password">Password:</label>
-          <input type="password" name="password" placeholder="Enter Password..." v-model="password" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password..."
+            v-model="password"
+            @keyup.enter="registerUser"
+          />
         </div>
         <div>
           <button @click="cancelReg">Cancel</button>

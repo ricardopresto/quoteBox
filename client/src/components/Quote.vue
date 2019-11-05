@@ -9,18 +9,33 @@
         </div>
         <div class="overlay" v-if="myQuote == false">
           <div class="icon" @click="addToMyQuotes">
-          <span>Add to My Quotes</span>
+            <span>Add to My Quotes</span>
           </div>
         </div>
         <div class="overlay" v-if="myQuote == true">
           <div class="icon" @click="editQuote">
-          <span>Edit</span>
+            <span>Edit</span>
           </div>
         </div>
       </div>
       <div v-if="editing == true">
-        <div>
-          <textarea id="quoteEdit" v-model="quote"></textarea>
+        <div id="editBox">
+          <div class="label">Quote:</div>
+          <textarea
+            class="editField"
+            ref="quoteEdit"
+            v-model="editedQuote"
+            oninput="this.style.height=''; this.style.height =
+          this.scrollHeight + 'px'"
+          ></textarea>
+          <div class="label">Author:</div>
+          <textarea class="editField" ref="authorEdit" v-model="editedAuthor"></textarea>
+          <div class="label">Source:</div>
+          <textarea class="editField" ref="sourceEdit" v-model="editedSource"></textarea>
+          <div id="buttons">
+            <button @click="cancelEdit">Cancel</button>
+            <button @click="saveEdit">Save</button>
+          </div>
         </div>
       </div>
     </div>
@@ -32,16 +47,35 @@ export default {
   name: "Quote",
   data() {
     return {
-      editing: false
-    }
+      editing: false,
+      editedQuote: this.quote,
+      editedAuthor: this.author,
+      editedSource: this.source
+    };
   },
   props: ["quote", "author", "source", "myQuote"],
   methods: {
     addToMyQuotes() {
-      this.$emit('add-to-myquotes')
+      this.$emit("add-to-myquotes");
     },
     editQuote() {
       this.editing = true;
+      this.$nextTick(() => {
+        this.$refs.quoteEdit.style.height =
+          this.$refs.quoteEdit.scrollHeight + "px";
+      });
+    },
+    cancelEdit() {
+      this.editing = false;
+      this.editedQuote = this.quote;
+      this.editedAuthor = this.author;
+      this.editedSource = this.source;
+    },
+    saveEdit() {
+      this.editing = false;
+      //this.quote = this.editedQuote;
+      //this.author = this.editedAuthor;
+      //this.source = this.editedSource;
     }
   }
 };
@@ -54,6 +88,7 @@ export default {
   border: 1px solid grey;
   border-radius: 8px;
   margin: 5px;
+  padding-top: 5px;
   background-image: url("paper.jpg");
   position: relative;
 }
@@ -90,10 +125,26 @@ export default {
   font-size: 0.8em;
   cursor: default;
 }
-.icon:hover {
-  color: #fff;
+#editBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-#quoteEdit {
-  
+.editField {
+  width: 90%;
+  margin: 10px;
+  padding: 5px;
+  resize: none;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1em;
+}
+.label {
+  margin-left: 15px;
+  align-self: flex-start;
+}
+button {
+  width: 80px;
+  height: 25px;
+  margin: 5px;
 }
 </style>

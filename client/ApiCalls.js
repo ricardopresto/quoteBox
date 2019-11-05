@@ -27,6 +27,10 @@ class ApiCalls {
 		return data;
 	}
 
+	static async addToMyQuotes(user, quote) {
+		await axios.post(`${url}/add/${user}`, quote);
+	}
+
 	static async registerUser(username, password) {
 		await axios.post(`${url}/register/${username}/${password}`);
 	}

@@ -77,18 +77,19 @@ export default {
     },
     addMyQuote(array) {
       array.forEach(i => {
-        i['myQuote'] = false;
-        });
-        return array;
+        i["myQuote"] = false;
+      });
+      return array;
     },
     addToMyQuotes(id) {
-      this.quotes.forEach(quote => {
+      this.quotes.forEach(async quote => {
         if (quote._id == id) {
           quote.myQuote = true;
+          quote._id = quote._id + "MQ";
+          await ApiCalls.addToMyQuotes("user.piss", quote);
         }
-      })
+      });
     }
-    
   }
 };
 </script>
