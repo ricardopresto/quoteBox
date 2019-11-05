@@ -9,6 +9,8 @@
         :quote="quote.quote"
         :author="quote.author"
         :source="quote.source"
+        :myQuote="quote.myQuote"
+        @add-to-myquotes="$emit('add-to-myquotes', quote._id)"
       />
     </div>
   </div>
@@ -25,7 +27,12 @@ export default {
     Register,
     Login
   },
-  props: ["quotes", "showRegister", "showLogin"]
+  props: ["quotes", "showRegister", "showLogin"],
+  methods: {
+    addToMyQuotes(e) {
+      console.log(e)
+    }
+  }
 };
 </script>
 

@@ -14,6 +14,7 @@
       :showRegister="showRegister"
       :showLogin="showLogin"
       @user-added="userAdded"
+      @add-to-myquotes="addToMyQuotes($event)"
     />
     <Footer />
   </div>
@@ -43,13 +44,14 @@ export default {
   },
   methods: {
     async randomQuote() {
-      const data = await ApiCalls.getRandomQuote();
-      console.log(data);
+      let data = await ApiCalls.getRandomQuote();
+      data = this.addMyQuote(data);
       this.quotes = data;
     },
     async authorSearch() {
       if (this.author != "") {
-        const data = await ApiCalls.authorSearch(this.author);
+        let data = await ApiCalls.authorSearch(this.author);
+        data = this.addMyQuote(data);
         console.log(data);
         this.quotes = data;
         this.author = "";
@@ -57,7 +59,8 @@ export default {
     },
     async wordSearch() {
       if (this.word != "") {
-        const data = await ApiCalls.wordSearch(this.word);
+        let data = await ApiCalls.wordSearch(this.word);
+        data = this.addMyQuote(data);
         console.log(data);
         this.quotes = data;
         this.word = "";
@@ -71,7 +74,21 @@ export default {
     },
     userAdded() {
       this.showRegister = false;
+    },
+    addMyQuote(array) {
+      array.forEach(i => {
+        i['myQuote'] = false;
+        });
+        return array;
+    },
+    addToMyQuotes(id) {
+      this.quotes.forEach(quote => {
+        if (quote._id == id) {
+          quote.myQuote = true;
+        }
+      })
     }
+    
   }
 };
 </script>
