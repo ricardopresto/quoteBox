@@ -1,10 +1,27 @@
 <template>
   <div>
     <div id="background">
-      <div id="quote">{{quote}}</div>
-      <div id="author">
-        <span>{{author}}</span>
-        <span id="source" v-if="source != undefined">, {{source}}</span>
+      <div v-if="editing == false">
+        <div id="quote">{{quote}}</div>
+        <div id="author">
+          <span>{{author}}</span>
+          <span id="source" v-if="source != undefined">, {{source}}</span>
+        </div>
+        <div class="overlay" v-if="myQuote == false">
+          <div class="icon" @click="addToMyQuotes">
+          <span>Add to My Quotes</span>
+          </div>
+        </div>
+        <div class="overlay" v-if="myQuote == true">
+          <div class="icon" @click="editQuote">
+          <span>Edit</span>
+          </div>
+        </div>
+      </div>
+      <div v-if="editing == true">
+        <div>
+          <textarea id="quoteEdit" v-model="quote"></textarea>
+        </div>
       </div>
     </div>
   </div>
@@ -13,7 +30,20 @@
 <script>
 export default {
   name: "Quote",
-  props: ["quote", "author", "source"]
+  data() {
+    return {
+      editing: false
+    }
+  },
+  props: ["quote", "author", "source", "myQuote"],
+  methods: {
+    addToMyQuotes() {
+      this.$emit('add-to-myquotes')
+    },
+    editQuote() {
+      this.editing = true;
+    }
+  }
 };
 </script>
 
@@ -25,6 +55,7 @@ export default {
   border-radius: 8px;
   margin: 5px;
   background-image: url("paper.jpg");
+  position: relative;
 }
 #quote {
   font-size: 1.1em;
@@ -37,5 +68,32 @@ export default {
 }
 #source {
   font-style: italic;
+}
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.overlay:hover {
+  opacity: 1;
+}
+.icon {
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 0.8em;
+  cursor: default;
+}
+.icon:hover {
+  color: #fff;
+}
+#quoteEdit {
+  
 }
 </style>
