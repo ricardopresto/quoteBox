@@ -55,10 +55,23 @@ app.post("/quotes/register/:username/:password", async (req, res) => {
 	res.status(201).send("User Created");
 });
 
+//Login user
+app.post("/quotes/login/:username/:password", async (req, res) => {
+	const users = await getUsers();
+	const user = await users.find({ username: req.params.username }).toArray();
+	console.log(user);
+	if (user.length == 0) {
+		res.send("fail");
+	} else if (user[0].password == req.params.password) {
+		res.send("success");
+	} else {
+		res.send("fail");
+	}
+});
+
 //Add to user collection
 app.post("/quotes/add/:user", async (req, res) => {
 	const quotes = await getMyQuotes(req.params.user);
-	req.body._id = new mongodb.ObjectID(req.body.id);
 	quotes.insertOne(req.body);
 	res.send("Inserted");
 });

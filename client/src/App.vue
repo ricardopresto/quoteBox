@@ -85,8 +85,8 @@ export default {
       this.quotes.forEach(async quote => {
         if (quote._id == id) {
           quote.myQuote = true;
-          quote._id = quote._id + "MQ";
-          await ApiCalls.addToMyQuotes("user.piss", quote);
+          delete quote._id;
+          await ApiCalls.addToMyQuotes("user.newUser", quote);
         }
       });
     }

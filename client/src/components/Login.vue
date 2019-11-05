@@ -4,18 +4,33 @@
       <div id="form">
         <div class="input">
           <label for="username">Username:</label>
-          <input type="text" name="username" placeholder="Enter Username..." v-model="username" />
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter Username..."
+            v-model="username"
+            @change="error = false"
+            @keyup.enter="loginUser"
+          />
         </div>
         <div class="input">
           <label for="password">Password:</label>
-          <input type="password" name="password" placeholder="Enter Password..." v-model="password" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password..."
+            v-model="password"
+            @keyup.enter="loginUser"
+          />
         </div>
         <div>
           <button>Cancel</button>
-          <button>Log In</button>
+          <button @click="userLogin">Log In</button>
         </div>
         <div id="messageBox">
           <div v-show="error == true">Please enter a username and password...</div>
+          <div v-show="incorrect == true">Incorrect username or password.</div>
+          <div v-show="success == true">Login successful!</div>
         </div>
       </div>
     </div>
@@ -23,16 +38,43 @@
 </template>
 
 <script>
+import ApiCalls from "../../ApiCalls.js";
 export default {
   name: "Login",
   data() {
     return {
       username: "",
       password: "",
-      error: false
+      error: false,
+      incorrect: false,
+      success: false
     };
   },
-  methods: {}
+  methods: {
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    async userLogin() {
+      if (this.username == "" || this.password == "") {
+        this.error = true;
+        this.incorrect = false;
+      } else {
+        const result = await ApiCalls.loginUser(this.username, this.password);
+        if (result == "fail") {
+          this.error = false;
+          this.incorrect = true;
+        } else if (result == "success") {
+          this.error = false;
+          this.incorrect = false;
+          this.success = true;
+          await this.sleep(1000);
+          this.$emit("user-logged-in");
+          this.username = "";
+          this.password = "";
+        }
+      }
+    }
+  }
 };
 </script>
 
