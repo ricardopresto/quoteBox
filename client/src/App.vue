@@ -1,6 +1,12 @@
 <template>
   <div>
-    <Header @register-click="registerClick" @login-click="loginClick" />
+    <Header
+      :loggedIn="loggedIn"
+      :currentUser="currentUser"
+      @register-click="registerClick"
+      @login-click="loginClick"
+      @logout-click="logoutClick"
+    />
     <button @click="authorSearch">Author Search</button>
     <input type="text" v-model="author" v-on:keyup.enter="authorSearch" />
     <br />
@@ -15,6 +21,8 @@
       :showLogin="showLogin"
       @user-added="userAdded"
       @add-to-myquotes="addToMyQuotes($event)"
+      @user-logged-in="userLoggedIn($event)"
+      @cancel-login="cancelLogin"
     />
     <Footer />
   </div>
@@ -39,7 +47,9 @@ export default {
       word: "",
       author: "",
       showRegister: false,
-      showLogin: false
+      showLogin: false,
+      loggedIn: false,
+      currentUser: ""
     };
   },
   methods: {
@@ -72,6 +82,13 @@ export default {
     loginClick() {
       this.showLogin = true;
     },
+    logoutClick() {
+      this.loggedIn = false;
+      this.currentUser = "";
+    },
+    cancelLogin() {
+      this.showLogin = false;
+    },
     userAdded() {
       this.showRegister = false;
     },
@@ -89,6 +106,12 @@ export default {
           await ApiCalls.addToMyQuotes("user.newUser", quote);
         }
       });
+    },
+    userLoggedIn(userObject) {
+      this.showLogin = false;
+      this.currentUser = userObject.username;
+      this.loggedIn = true;
+      console.log(this.currentUser);
     }
   }
 };

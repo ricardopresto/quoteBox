@@ -1,8 +1,16 @@
 <template>
   <div>
     <div id="container">
-      <Register v-if="showRegister == true" @user-added="$emit('user-added')" />
-      <Login v-if="showLogin == true" />
+      <Register
+        v-if="showRegister == true"
+        @user-added="$emit('user-added')"
+        @user-logged-in="$emit('user-logged-in', $event)"
+      />
+      <Login
+        v-if="showLogin == true"
+        @user-logged-in="$emit('user-logged-in', $event)"
+        @cancel-login="$emit('cancel-login')"
+      />
       <Quote
         v-for="quote in quotes"
         :key="quote._id"
@@ -30,7 +38,7 @@ export default {
   props: ["quotes", "showRegister", "showLogin"],
   methods: {
     addToMyQuotes(e) {
-      console.log(e)
+      console.log(e);
     }
   }
 };

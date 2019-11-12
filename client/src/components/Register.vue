@@ -59,9 +59,13 @@ export default {
         this.error = false;
         this.created = true;
         await this.sleep(1000);
+        this.$emit("user-added");
+        this.$emit("user-logged-in", {
+          username: this.username,
+          password: this.password
+        });
         this.username = "";
         this.password = "";
-        this.$emit("user-added");
       }
     },
     cancelReg() {

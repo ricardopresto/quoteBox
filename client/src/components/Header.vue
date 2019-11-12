@@ -1,8 +1,10 @@
 <template>
   <div>
     <div id="headerContainer">
-      <button id="register" @click="$emit('register-click')">Register</button>
-      <button id="login" @click="$emit('login-click')">Log In</button>
+      <div id="usernameDisplay" v-if="loggedIn">Logged in as: {{currentUser}}</div>
+      <button id="register" v-if="!loggedIn" @click="$emit('register-click')">Register</button>
+      <button id="login" v-if="!loggedIn" @click="$emit('login-click')">Log In</button>
+      <button id="logout" v-if="loggedIn" @click="$emit('logout-click')">Log Out</button>
     </div>
   </div>
 </template>
@@ -10,7 +12,7 @@
 <script>
 export default {
   name: "Header",
-  components: {},
+  props: ["loggedIn", "currentUser"],
   data() {
     return {
       username: "",
@@ -29,6 +31,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
 }
 button {
   width: 80px;

@@ -24,8 +24,8 @@
           />
         </div>
         <div>
-          <button>Cancel</button>
-          <button @click="userLogin">Log In</button>
+          <button @click="cancelLogin">Cancel</button>
+          <button @click="loginUser">Log In</button>
         </div>
         <div id="messageBox">
           <div v-show="error == true">Please enter a username and password...</div>
@@ -54,7 +54,7 @@ export default {
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
-    async userLogin() {
+    async loginUser() {
       if (this.username == "" || this.password == "") {
         this.error = true;
         this.incorrect = false;
@@ -68,11 +68,19 @@ export default {
           this.incorrect = false;
           this.success = true;
           await this.sleep(1000);
-          this.$emit("user-logged-in");
+          this.$emit("user-logged-in", {
+            username: this.username,
+            password: this.password
+          });
           this.username = "";
           this.password = "";
         }
       }
+    },
+    cancelLogin() {
+      this.username = "";
+      this.password = "";
+      this.$emit("cancel-login");
     }
   }
 };
