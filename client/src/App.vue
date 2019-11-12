@@ -103,7 +103,7 @@ export default {
         if (quote._id == id) {
           quote.myQuote = true;
           delete quote._id;
-          await ApiCalls.addToMyQuotes("user.newUser", quote);
+          await ApiCalls.addToMyQuotes(`user.${this.currentUser}`, quote);
         }
       });
     },
