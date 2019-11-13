@@ -35,6 +35,14 @@ class ApiCalls {
     return data;
   }
 
+  static async myQuotesAuthorSearch(author, user) {
+    var data = "";
+    await axios.get(`${url}/author/${author}/${user}`).then(res => {
+      data = res.data;
+    });
+    return data;
+  }
+
   static async addToMyQuotes(user, quote) {
     await axios.post(`${url}/add/${user}`, quote);
   }

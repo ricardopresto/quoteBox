@@ -68,7 +68,16 @@ export default {
         let data = await ApiCalls.authorSearch(this.author);
         data = this.addMyQuote(data);
         this.quotes = data;
-        //this.author = "";
+        this.currentSearch = "author";
+      }
+    },
+    async myQuotesAuthorSearch() {
+      if (this.author != "") {
+        let data = await ApiCalls.myQuotesAuthorSearch(
+          this.author,
+          `user.${this.currentUser}`
+        );
+        this.quotes = data;
         this.currentSearch = "author";
       }
     },
@@ -77,7 +86,6 @@ export default {
         let data = await ApiCalls.wordSearch(this.word);
         data = this.addMyQuote(data);
         this.quotes = data;
-        //this.word = "";
         this.currentSearch = "word";
       }
     },
@@ -88,7 +96,6 @@ export default {
           `user.${this.currentUser}`
         );
         this.quotes = data;
-        //this.word = "";
         this.currentSearch = "word";
       }
     },
@@ -134,7 +141,7 @@ export default {
       if (this.currentSearch == "word") {
         this.myQuotesWordSearch();
       } else if (this.currentSearch == "author") {
-        this.authorSearch();
+        this.myQuotesAuthorSearch();
       }
     },
     userLoggedIn(userObject) {

@@ -32,9 +32,18 @@ app.get("/quotes/search/:word/:user", async (req, res) => {
   res.send(data);
 });
 
-//Search by author
+//Search collection by author
 app.get("/quotes/author/:word", async (req, res) => {
   const quotes = await getQuotes();
+  const data = await quotes
+    .find({ author: { $regex: req.params.word, $options: "$i" } })
+    .toArray();
+  res.send(data);
+});
+
+//Search myQuotes by author
+app.get("/quotes/author/:word/:user", async (req, res) => {
+  const quotes = await getMyQuotes(req.params.user);
   const data = await quotes
     .find({ author: { $regex: req.params.word, $options: "$i" } })
     .toArray();
