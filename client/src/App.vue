@@ -24,7 +24,10 @@
       @user-logged-in="userLoggedIn($event)"
       @cancel-login="cancelLogin"
     />
-    <Footer />
+    <Footer
+      @collection-click="collectionClick"
+      @myquotes-click="myQuotesClick"
+    />
   </div>
 </template>
 
@@ -49,7 +52,8 @@ export default {
       showRegister: false,
       showLogin: false,
       loggedIn: false,
-      currentUser: ""
+      currentUser: "",
+      currentSearch: ""
     };
   },
   methods: {
@@ -57,23 +61,35 @@ export default {
       let data = await ApiCalls.getRandomQuote();
       data = this.addMyQuote(data);
       this.quotes = data;
+      this.currentSearch = "";
     },
     async authorSearch() {
       if (this.author != "") {
         let data = await ApiCalls.authorSearch(this.author);
         data = this.addMyQuote(data);
-        console.log(data);
         this.quotes = data;
-        this.author = "";
+        //this.author = "";
+        this.currentSearch = "author";
       }
     },
     async wordSearch() {
       if (this.word != "") {
         let data = await ApiCalls.wordSearch(this.word);
         data = this.addMyQuote(data);
-        console.log(data);
         this.quotes = data;
-        this.word = "";
+        //this.word = "";
+        this.currentSearch = "word";
+      }
+    },
+    async myQuotesWordSearch() {
+      if (this.word != "") {
+        let data = await ApiCalls.myQuotesWordSearch(
+          this.word,
+          `user.${this.currentUser}`
+        );
+        this.quotes = data;
+        //this.word = "";
+        this.currentSearch = "word";
       }
     },
     registerClick() {
@@ -106,6 +122,20 @@ export default {
           await ApiCalls.addToMyQuotes(`user.${this.currentUser}`, quote);
         }
       });
+    },
+    collectionClick() {
+      if (this.currentSearch == "word") {
+        this.wordSearch();
+      } else if (this.currentSearch == "author") {
+        this.authorSearch();
+      }
+    },
+    myQuotesClick() {
+      if (this.currentSearch == "word") {
+        this.myQuotesWordSearch();
+      } else if (this.currentSearch == "author") {
+        this.authorSearch();
+      }
     },
     userLoggedIn(userObject) {
       this.showLogin = false;
