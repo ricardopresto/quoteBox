@@ -68,10 +68,7 @@ export default {
           this.incorrect = false;
           this.success = true;
           await this.sleep(1000);
-          this.$emit("user-logged-in", {
-            username: this.username,
-            password: this.password
-          });
+          this.$emit("user-logged-in", this.username);
           this.username = "";
           this.password = "";
         }

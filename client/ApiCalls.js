@@ -11,35 +11,29 @@ class ApiCalls {
     return data;
   }
 
-  static async wordSearch(word) {
+  static async wordSearch(word, user) {
     var data = "";
-    await axios.get(`${url}/search/${word}`).then(res => {
+    await axios.get(`${url}/wordsearch/${word}/${user}`).then(res => {
       data = res.data;
     });
     return data;
   }
 
-  static async myQuotesWordSearch(word, user) {
+  static async authorSearch(author, user) {
     var data = "";
-    await axios.get(`${url}/search/${word}/${user}`).then(res => {
+    await axios.get(`${url}/authorsearch/${author}/${user}`).then(res => {
       data = res.data;
     });
     return data;
   }
 
-  static async authorSearch(author) {
+  static async combinedSearch(word, author, user) {
     var data = "";
-    await axios.get(`${url}/author/${author}`).then(res => {
-      data = res.data;
-    });
-    return data;
-  }
-
-  static async myQuotesAuthorSearch(author, user) {
-    var data = "";
-    await axios.get(`${url}/author/${author}/${user}`).then(res => {
-      data = res.data;
-    });
+    await axios
+      .get(`${url}/combinedsearch/${word}/${author}/${user}`)
+      .then(res => {
+        data = res.data;
+      });
     return data;
   }
 

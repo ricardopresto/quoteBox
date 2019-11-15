@@ -7,13 +7,14 @@
       @login-click="loginClick"
       @logout-click="logoutClick"
     />
-    <button @click="authorSearch">Author Search</button>
-    <input type="text" v-model="author" v-on:keyup.enter="authorSearch" />
+    <span>Author:</span>
+    <input type="text" v-model="author" v-on:keyup.enter="search" />
     <br />
-    <button @click="wordSearch">Word Search</button>
-    <input type="text" v-model="word" v-on:keyup.enter="wordSearch" />
+    <span>Word:</span>
+    <input type="text" v-model="word" v-on:keyup.enter="search" />
     <br />
     <button @click="randomQuote">Random</button>
+    <button @click="search">Combined Search</button>
     <br />
     <QuoteBox
       :quotes="quotes"
@@ -24,10 +25,7 @@
       @user-logged-in="userLoggedIn($event)"
       @cancel-login="cancelLogin"
     />
-    <Footer
-      @collection-click="collectionClick"
-      @myquotes-click="myQuotesClick"
-    />
+    <Footer @collection-click="collectionClick" @myquotes-click="myQuotesClick" />
   </div>
 </template>
 
@@ -53,52 +51,39 @@ export default {
       showLogin: false,
       loggedIn: false,
       currentUser: "",
-      currentSearch: ""
+      myQuotes: false
     };
   },
   methods: {
     async randomQuote() {
       let data = await ApiCalls.getRandomQuote();
-      data = this.addMyQuote(data);
       this.quotes = data;
       this.currentSearch = "";
     },
-    async authorSearch() {
-      if (this.author != "") {
-        let data = await ApiCalls.authorSearch(this.author);
-        data = this.addMyQuote(data);
-        this.quotes = data;
-        this.currentSearch = "author";
-      }
-    },
-    async myQuotesAuthorSearch() {
-      if (this.author != "") {
-        let data = await ApiCalls.myQuotesAuthorSearch(
-          this.author,
-          `user.${this.currentUser}`
-        );
-        this.quotes = data;
-        this.currentSearch = "author";
-      }
-    },
-    async wordSearch() {
-      if (this.word != "") {
-        let data = await ApiCalls.wordSearch(this.word);
-        data = this.addMyQuote(data);
-        this.quotes = data;
-        this.currentSearch = "word";
-      }
-    },
-    async myQuotesWordSearch() {
-      if (this.word != "") {
-        let data = await ApiCalls.myQuotesWordSearch(
+
+    async search() {
+      if (this.word.trim() != "" && this.author.trim() != "") {
+        let data = await ApiCalls.combinedSearch(
           this.word,
-          `user.${this.currentUser}`
+          this.author,
+          this.myQuotes ? `user.${this.currentUser}` : "main"
         );
         this.quotes = data;
-        this.currentSearch = "word";
+      } else if (this.word.trim() != "") {
+        let data = await ApiCalls.wordSearch(
+          this.word,
+          this.myQuotes ? `user.${this.currentUser}` : "main"
+        );
+        this.quotes = data;
+      } else if (this.author.trim() != "") {
+        let data = await ApiCalls.authorSearch(
+          this.author,
+          this.myQuotes ? `user.${this.currentUser}` : "main"
+        );
+        this.quotes = data;
       }
     },
+
     registerClick() {
       this.showRegister = true;
     },
@@ -115,12 +100,6 @@ export default {
     userAdded() {
       this.showRegister = false;
     },
-    addMyQuote(array) {
-      array.forEach(i => {
-        i["myQuote"] = false;
-      });
-      return array;
-    },
     addToMyQuotes(id) {
       this.quotes.forEach(async quote => {
         if (quote._id == id) {
@@ -131,24 +110,17 @@ export default {
       });
     },
     collectionClick() {
-      if (this.currentSearch == "word") {
-        this.wordSearch();
-      } else if (this.currentSearch == "author") {
-        this.authorSearch();
-      }
+      this.myQuotes = false;
+      this.search();
     },
     myQuotesClick() {
-      if (this.currentSearch == "word") {
-        this.myQuotesWordSearch();
-      } else if (this.currentSearch == "author") {
-        this.myQuotesAuthorSearch();
-      }
+      this.myQuotes = true;
+      this.search();
     },
-    userLoggedIn(userObject) {
+    userLoggedIn(username) {
       this.showLogin = false;
-      this.currentUser = userObject.username;
+      this.currentUser = username;
       this.loggedIn = true;
-      console.log(this.currentUser);
     }
   }
 };
@@ -165,5 +137,10 @@ export default {
 button {
   margin: 8px;
   width: 120px;
+}
+span {
+  display: inline-block;
+  margin: 8px;
+  width: 60px;
 }
 </style>

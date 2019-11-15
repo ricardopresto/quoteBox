@@ -14,45 +14,39 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-//Search collection by keyword
-app.get("/quotes/search/:word", async (req, res) => {
-  const quotes = await getQuotes();
+//Search by keyword
+app.get("/quotes/wordsearch/:word/:user", async (req, res) => {
+  const quotes = await getQuotes(req.params.user);
   const data = await quotes
     .find({ quote: { $regex: req.params.word, $options: "$i" } })
     .toArray();
   res.send(data);
 });
 
-//Search myQuotes by keyword
-app.get("/quotes/search/:word/:user", async (req, res) => {
-  const quotes = await getMyQuotes(req.params.user);
+//Search by author
+app.get("/quotes/authorsearch/:author/:user", async (req, res) => {
+  const quotes = await getQuotes(req.params.user);
   const data = await quotes
-    .find({ quote: { $regex: req.params.word, $options: "$i" } })
+    .find({ author: { $regex: req.params.author, $options: "$i" } })
     .toArray();
   res.send(data);
 });
 
-//Search collection by author
-app.get("/quotes/author/:word", async (req, res) => {
-  const quotes = await getQuotes();
+//Search by keyword and author
+app.get("/quotes/combinedsearch/:word/:author/:user", async (req, res) => {
+  const quotes = await getQuotes(req.params.user);
   const data = await quotes
-    .find({ author: { $regex: req.params.word, $options: "$i" } })
-    .toArray();
-  res.send(data);
-});
-
-//Search myQuotes by author
-app.get("/quotes/author/:word/:user", async (req, res) => {
-  const quotes = await getMyQuotes(req.params.user);
-  const data = await quotes
-    .find({ author: { $regex: req.params.word, $options: "$i" } })
+    .find({
+      quote: { $regex: req.params.word, $options: "$i" },
+      author: { $regex: req.params.author, $options: "$i" }
+    })
     .toArray();
   res.send(data);
 });
 
 //Get random quote
 app.get("/quotes/random", async (req, res) => {
-  const quotes = await getQuotes();
+  const quotes = await getQuotes("main");
   const data = await quotes.aggregate([{ $sample: { size: 1 } }]).toArray();
   res.send(data);
 });
@@ -77,7 +71,6 @@ app.post("/quotes/register/:username/:password", async (req, res) => {
 app.post("/quotes/login/:username/:password", async (req, res) => {
   const users = await getUsers();
   const user = await users.find({ username: req.params.username }).toArray();
-  console.log(user);
   if (user.length == 0) {
     res.send("fail");
   } else if (user[0].password == req.params.password) {
@@ -100,11 +93,11 @@ app.delete("/quotes/delete/:id", async (req, res) => {
   res.send("Deleted");
 });
 
-async function getQuotes() {
+async function getQuotes(user) {
   const client = await mongodb.MongoClient.connect(url, {
     useUnifiedTopology: true
   });
-  return client.db(dbName).collection("main");
+  return client.db(dbName).collection(user);
 }
 
 async function getMyQuotes(user) {
