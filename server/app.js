@@ -56,16 +56,26 @@ app.post("/quotes/register/:username/:password", async (req, res) => {
   const client = await mongodb.MongoClient.connect(url, {
     useUnifiedTopology: true
   });
-  client.db(dbName).createCollection(`user.${req.params.username}`);
-
   const users = await getUsers();
+  const userArray = await users.find({}).toArray();
+  let userExists = false;
+  userArray.forEach(user => {
+    if (user.username == req.params.username) {
+      userExists = true;
+    }
+  })
+  if (userExists == true) {
+    res.send("taken");
+  } else { client.db(dbName).createCollection(`user.${req.params.username}`);
   var newUser = {
     username: req.params.username,
     password: req.params.password
   };
   users.insertOne(newUser);
-  res.status(201).send("User Created");
+  res.send("created");
+};
 });
+
 
 //Login user
 app.post("/quotes/login/:username/:password", async (req, res) => {

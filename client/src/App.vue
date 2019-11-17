@@ -14,7 +14,7 @@
     <input type="text" v-model="word" v-on:keyup.enter="search" />
     <br />
     <button @click="randomQuote">Random</button>
-    <button @click="search">Combined Search</button>
+    <button @click="search">Search</button>
     <br />
     <QuoteBox
       :quotes="quotes"
