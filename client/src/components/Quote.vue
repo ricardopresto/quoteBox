@@ -53,7 +53,7 @@ export default {
       editedSource: this.source
     };
   },
-  props: ["quote", "author", "source", "myQuote", "loggedIn"],
+  props: ["quote", "author", "source", "id", "myQuote", "loggedIn"],
   methods: {
     addToMyQuotes() {
       this.$emit("add-to-myquotes");
@@ -73,9 +73,12 @@ export default {
     },
     saveEdit() {
       this.editing = false;
-      //this.quote = this.editedQuote;
-      //this.author = this.editedAuthor;
-      //this.source = this.editedSource;
+      this.$emit('edit-quote', {
+        quote: this.editedQuote,
+        author: this.editedAuthor,
+        source: this.editedSource,
+        id: this.id
+      });
     }
   }
 };

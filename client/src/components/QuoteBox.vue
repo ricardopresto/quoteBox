@@ -14,12 +14,14 @@
       <Quote
         v-for="quote in quotes"
         :key="quote._id"
+        :id="quote._id"
         :quote="quote.quote"
         :author="quote.author"
         :source="quote.source"
         :myQuote="quote.myQuote"
         :loggedIn="loggedIn"
         @add-to-myquotes="$emit('add-to-myquotes', quote._id)"
+        @edit-quote="$emit('edit-quote', $event)"
       />
     </div>
   </div>

@@ -23,6 +23,7 @@
       :loggedIn="loggedIn"
       @user-added="userAdded"
       @add-to-myquotes="addToMyQuotes($event)"
+      @edit-quote="saveEditedQuote($event)"
       @user-logged-in="userLoggedIn($event)"
       @cancel-login="cancelLogin"
     />
@@ -122,8 +123,17 @@ export default {
       this.quotes.forEach(async quote => {
         if (quote._id == id) {
           quote.myQuote = true;
-          delete quote._id;
+          quote._id = quote._id + "MQ";
           await ApiCalls.addToMyQuotes(`user.${this.currentUser}`, quote);
+        }
+      });
+    },
+    saveEditedQuote(edit) {
+      this.quotes.forEach(async quote => {
+        if (quote._id == edit.id) {
+          quote.quote = edit.quote;
+          quote.author = edit.author;
+          quote.source = edit.source;
         }
       });
     },
