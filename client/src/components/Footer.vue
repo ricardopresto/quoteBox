@@ -1,17 +1,18 @@
 <template>
   <div>
     <div id="footerContainer">
-      <button id="collection" @click="$emit('collection-click')">
+      <button id="collection" v-if="loggedIn == true" @click="$emit('collection-click')">
         Collection
       </button>
-      <button id="myQuotes" @click="$emit('myquotes-click')">MyQuotes</button>
+      <button id="myQuotes" v-if="loggedIn == true" @click="$emit('myquotes-click')">MyQuotes</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Footer"
+  name: "Footer",
+  props: ["loggedIn"]
 };
 </script>
 

@@ -20,12 +20,17 @@
       :quotes="quotes"
       :showRegister="showRegister"
       :showLogin="showLogin"
+      :loggedIn="loggedIn"
       @user-added="userAdded"
       @add-to-myquotes="addToMyQuotes($event)"
       @user-logged-in="userLoggedIn($event)"
       @cancel-login="cancelLogin"
     />
-    <Footer @collection-click="collectionClick" @myquotes-click="myQuotesClick" />
+    <Footer 
+      :loggedIn="loggedIn" 
+      @collection-click="collectionClick" 
+      @myquotes-click="myQuotesClick" 
+    />
   </div>
 </template>
 
@@ -82,13 +87,26 @@ export default {
         );
         this.quotes = data;
       }
+      this.removeDuplicates();
+    },
+
+    removeDuplicates() {
+      this.quotes.forEach(quote => {
+        for (let n = this.quotes.indexOf(quote) + 1; n < this.quotes.length; n++) {
+          if (this.quotes[n].quote == quote.quote) {
+            this.quotes.splice(n, 1);
+          }
+        }
+      })
     },
 
     registerClick() {
       this.showRegister = true;
+      this.showLogin = false;
     },
     loginClick() {
       this.showLogin = true;
+      this.showRegister = false;
     },
     logoutClick() {
       this.loggedIn = false;

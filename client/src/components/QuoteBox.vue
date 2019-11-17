@@ -18,6 +18,7 @@
         :author="quote.author"
         :source="quote.source"
         :myQuote="quote.myQuote"
+        :loggedIn="loggedIn"
         @add-to-myquotes="$emit('add-to-myquotes', quote._id)"
       />
     </div>
@@ -35,7 +36,7 @@ export default {
     Register,
     Login
   },
-  props: ["quotes", "showRegister", "showLogin"],
+  props: ["quotes", "showRegister", "showLogin", "loggedIn"],
   methods: {
     addToMyQuotes(e) {
       console.log(e);

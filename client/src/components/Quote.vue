@@ -7,7 +7,7 @@
           <span>{{author}}</span>
           <span id="source" v-if="source != undefined">, {{source}}</span>
         </div>
-        <div class="overlay" v-if="myQuote == false">
+        <div class="overlay" v-if="myQuote == false && loggedIn == true">
           <div class="icon" @click="addToMyQuotes">
             <span>Add to My Quotes</span>
           </div>
@@ -53,7 +53,7 @@ export default {
       editedSource: this.source
     };
   },
-  props: ["quote", "author", "source", "myQuote"],
+  props: ["quote", "author", "source", "myQuote", "loggedIn"],
   methods: {
     addToMyQuotes() {
       this.$emit("add-to-myquotes");
