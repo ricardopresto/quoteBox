@@ -44,6 +44,13 @@ app.get("/quotes/combinedsearch/:word/:author/:user", async (req, res) => {
   res.send(data);
 });
 
+//Get whole user collection
+app.get("/quotes/showall/:user", async (req, res) => {
+  const quotes = await getQuotes(req.params.user);
+  const data = await quotes.find({}).toArray();
+  res.send(data);
+});
+
 //Get random quote
 app.get("/quotes/random", async (req, res) => {
   const quotes = await getQuotes("main");

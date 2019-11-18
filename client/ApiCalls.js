@@ -11,6 +11,14 @@ class ApiCalls {
     return data;
   }
 
+  static async showAll(user) {
+    var data = "";
+    await axios.get(`${url}/showall/${user}`).then(res => {
+      data = res.data;
+    });
+    return data;
+  }
+
   static async wordSearch(word, user) {
     var data = "";
     await axios.get(`${url}/wordsearch/${word}/${user}`).then(res => {

@@ -13,8 +13,9 @@
     <span>Word:</span>
     <input type="text" v-model="word" v-on:keyup.enter="search" />
     <br />
-    <button @click="randomQuote">Random</button>
     <button @click="search">Search</button>
+    <button v-if="myQuotes == false" @click="randomQuote">Random</button>
+    <button v-if="myQuotes == true" @click="showAll">Show All</button>
     <br />
     <QuoteBox
       :quotes="quotes"
@@ -127,6 +128,10 @@ export default {
         }
         ApiCalls.updateEditedQuote(`user.${this.currentUser}`, edit);
       });
+    },
+    async showAll() {
+      let data = await ApiCalls.showAll(`user.${this.currentUser}`);
+      this.quotes = data;
     },
     collectionClick() {
       this.myQuotes = false;
