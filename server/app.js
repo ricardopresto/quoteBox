@@ -63,19 +63,19 @@ app.post("/quotes/register/:username/:password", async (req, res) => {
     if (user.username == req.params.username) {
       userExists = true;
     }
-  })
+  });
   if (userExists == true) {
     res.send("taken");
-  } else { client.db(dbName).createCollection(`user.${req.params.username}`);
-  var newUser = {
-    username: req.params.username,
-    password: req.params.password
-  };
-  users.insertOne(newUser);
-  res.send("created");
-};
+  } else {
+    client.db(dbName).createCollection(`user.${req.params.username}`);
+    var newUser = {
+      username: req.params.username,
+      password: req.params.password
+    };
+    users.insertOne(newUser);
+    res.send("created");
+  }
 });
-
 
 //Login user
 app.post("/quotes/login/:username/:password", async (req, res) => {
@@ -92,9 +92,26 @@ app.post("/quotes/login/:username/:password", async (req, res) => {
 
 //Add to user collection
 app.post("/quotes/add/:user", async (req, res) => {
-  const quotes = await getMyQuotes(req.params.user);
+  const quotes = await getQuotes(req.params.user);
   quotes.insertOne(req.body);
-  res.send("Inserted");
+  res.send("inserted");
+});
+
+//Update edited quote
+app.put("/quotes/edit/:user", async (req, res) => {
+  const quotes = await getQuotes(req.params.user);
+  console.log(req.body);
+  quotes.updateOne(
+    { _id: req.body.id },
+    {
+      $set: {
+        quote: req.body.quote,
+        author: req.body.author,
+        source: req.body.source
+      }
+    }
+  );
+  res.send("updated");
 });
 
 app.delete("/quotes/delete/:id", async (req, res) => {

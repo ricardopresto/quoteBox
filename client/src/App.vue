@@ -27,10 +27,10 @@
       @user-logged-in="userLoggedIn($event)"
       @cancel-login="cancelLogin"
     />
-    <Footer 
-      :loggedIn="loggedIn" 
-      @collection-click="collectionClick" 
-      @myquotes-click="myQuotesClick" 
+    <Footer
+      :loggedIn="loggedIn"
+      @collection-click="collectionClick"
+      @myquotes-click="myQuotesClick"
     />
   </div>
 </template>
@@ -66,7 +66,6 @@ export default {
       this.quotes = data;
       this.currentSearch = "";
     },
-
     async search() {
       if (this.word.trim() != "" && this.author.trim() != "") {
         let data = await ApiCalls.combinedSearch(
@@ -90,34 +89,18 @@ export default {
       }
       this.removeDuplicates();
     },
-
     removeDuplicates() {
       this.quotes.forEach(quote => {
-        for (let n = this.quotes.indexOf(quote) + 1; n < this.quotes.length; n++) {
+        for (
+          let n = this.quotes.indexOf(quote) + 1;
+          n < this.quotes.length;
+          n++
+        ) {
           if (this.quotes[n].quote == quote.quote) {
             this.quotes.splice(n, 1);
           }
         }
-      })
-    },
-
-    registerClick() {
-      this.showRegister = true;
-      this.showLogin = false;
-    },
-    loginClick() {
-      this.showLogin = true;
-      this.showRegister = false;
-    },
-    logoutClick() {
-      this.loggedIn = false;
-      this.currentUser = "";
-    },
-    cancelLogin() {
-      this.showLogin = false;
-    },
-    userAdded() {
-      this.showRegister = false;
+      });
     },
     addToMyQuotes(id) {
       this.quotes.forEach(async quote => {
@@ -135,18 +118,17 @@ export default {
           quote.author = edit.author;
           quote.source = edit.source;
         }
+        await ApiCalls.updateEditedQuote(`user.${this.currentUser}`, edit);
       });
     },
     collectionClick() {
       this.myQuotes = false;
       this.search();
     },
-
     myQuotesClick() {
       this.myQuotes = true;
       this.search();
     },
-
     registerClick() {
       this.showRegister = true;
     },
