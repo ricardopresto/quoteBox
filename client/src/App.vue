@@ -84,6 +84,26 @@ export default {
       }
     },
 
+    addToMyQuotes(id) {
+      this.quotes.forEach(async quote => {
+        if (quote._id == id) {
+          quote.myQuote = true;
+          delete quote._id;
+          await ApiCalls.addToMyQuotes(`user.${this.currentUser}`, quote);
+        }
+      });
+    },
+
+    collectionClick() {
+      this.myQuotes = false;
+      this.search();
+    },
+
+    myQuotesClick() {
+      this.myQuotes = true;
+      this.search();
+    },
+
     registerClick() {
       this.showRegister = true;
     },
@@ -99,23 +119,6 @@ export default {
     },
     userAdded() {
       this.showRegister = false;
-    },
-    addToMyQuotes(id) {
-      this.quotes.forEach(async quote => {
-        if (quote._id == id) {
-          quote.myQuote = true;
-          delete quote._id;
-          await ApiCalls.addToMyQuotes(`user.${this.currentUser}`, quote);
-        }
-      });
-    },
-    collectionClick() {
-      this.myQuotes = false;
-      this.search();
-    },
-    myQuotesClick() {
-      this.myQuotes = true;
-      this.search();
     },
     userLoggedIn(username) {
       this.showLogin = false;

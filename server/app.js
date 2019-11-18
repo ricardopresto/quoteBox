@@ -100,13 +100,6 @@ async function getQuotes(user) {
   return client.db(dbName).collection(user);
 }
 
-async function getMyQuotes(user) {
-  const client = await mongodb.MongoClient.connect(url, {
-    useUnifiedTopology: true
-  });
-  return client.db(dbName).collection(user);
-}
-
 async function getUsers() {
   const client = await mongodb.MongoClient.connect(url, {
     useUnifiedTopology: true
