@@ -45,6 +45,10 @@ class ApiCalls {
     await axios.put(`${url}/edit/${user}`, edit);
   }
 
+  static async deleteFromMyQuotes(user, id) {
+    await axios.delete(`${url}/delete/${user}/${id}`);
+  }
+
   static async registerUser(username, password) {
     var result = "";
     await axios.post(`${url}/register/${username}/${password}`).then(res => {

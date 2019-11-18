@@ -114,10 +114,11 @@ app.put("/quotes/edit/:user", async (req, res) => {
   res.send("updated");
 });
 
-app.delete("/quotes/delete/:id", async (req, res) => {
-  const quotes = await getQuotes();
-  await quotes.deleteOne({ _id: new mongodb.ObjectID(req.params.id) });
-  res.send("Deleted");
+//Delete from user collection
+app.delete("/quotes/delete/:user/:id", async (req, res) => {
+  const quotes = await getQuotes(req.params.user);
+  await quotes.deleteOne({ _id: req.params.id });
+  res.send("deleted");
 });
 
 async function getQuotes(user) {

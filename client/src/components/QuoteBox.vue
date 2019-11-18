@@ -21,6 +21,7 @@
         :myQuote="quote.myQuote"
         :loggedIn="loggedIn"
         @add-to-myquotes="$emit('add-to-myquotes', quote._id)"
+        @delete-quote="$emit('delete-quote', quote._id)"
         @edit-quote="$emit('edit-quote', $event)"
       />
     </div>
