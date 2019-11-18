@@ -22,6 +22,7 @@
       :showRegister="showRegister"
       :showLogin="showLogin"
       :loggedIn="loggedIn"
+      :addQuote="addQuote"
       @user-added="userAdded"
       @add-to-myquotes="addToMyQuotes($event)"
       @delete-quote="deleteQuote($event)"
@@ -59,7 +60,8 @@ export default {
       showLogin: false,
       loggedIn: false,
       currentUser: "",
-      myQuotes: false
+      myQuotes: false,
+      addQuote: false
     };
   },
   methods: {

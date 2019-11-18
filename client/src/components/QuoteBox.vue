@@ -12,6 +12,14 @@
         @cancel-login="$emit('cancel-login')"
       />
       <Quote
+        v-if="addQuote == true"
+        :addQuote="addQuote"
+        :quote="''"
+        :author="''"
+        :source="''"
+        :myQuote="true"
+      />
+      <Quote
         v-for="quote in quotes"
         :key="quote._id"
         :id="quote._id"
@@ -39,7 +47,7 @@ export default {
     Register,
     Login
   },
-  props: ["quotes", "showRegister", "showLogin", "loggedIn"],
+  props: ["quotes", "showRegister", "showLogin", "loggedIn", "addQuote"],
   methods: {
     addToMyQuotes(e) {
       console.log(e);

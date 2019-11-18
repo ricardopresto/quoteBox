@@ -62,7 +62,7 @@ export default {
       editedSource: this.source
     };
   },
-  props: ["quote", "author", "source", "id", "myQuote", "loggedIn"],
+  props: ["quote", "author", "source", "id", "myQuote", "loggedIn", "addQuote"],
   methods: {
     addToMyQuotes() {
       this.$emit("add-to-myquotes");
