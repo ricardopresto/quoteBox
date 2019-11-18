@@ -14,18 +14,24 @@
     <input type="text" v-model="word" v-on:keyup.enter="search" />
     <br />
     <button @click="randomQuote">Random</button>
-    <button @click="search">Combined Search</button>
+    <button @click="search">Search</button>
     <br />
     <QuoteBox
       :quotes="quotes"
       :showRegister="showRegister"
       :showLogin="showLogin"
+      :loggedIn="loggedIn"
       @user-added="userAdded"
       @add-to-myquotes="addToMyQuotes($event)"
+      @edit-quote="saveEditedQuote($event)"
       @user-logged-in="userLoggedIn($event)"
       @cancel-login="cancelLogin"
     />
-    <Footer @collection-click="collectionClick" @myquotes-click="myQuotesClick" />
+    <Footer 
+      :loggedIn="loggedIn" 
+      @collection-click="collectionClick" 
+      @myquotes-click="myQuotesClick" 
+    />
   </div>
 </template>
 
@@ -82,18 +88,55 @@ export default {
         );
         this.quotes = data;
       }
+      this.removeDuplicates();
     },
 
+    removeDuplicates() {
+      this.quotes.forEach(quote => {
+        for (let n = this.quotes.indexOf(quote) + 1; n < this.quotes.length; n++) {
+          if (this.quotes[n].quote == quote.quote) {
+            this.quotes.splice(n, 1);
+          }
+        }
+      })
+    },
+
+    registerClick() {
+      this.showRegister = true;
+      this.showLogin = false;
+    },
+    loginClick() {
+      this.showLogin = true;
+      this.showRegister = false;
+    },
+    logoutClick() {
+      this.loggedIn = false;
+      this.currentUser = "";
+    },
+    cancelLogin() {
+      this.showLogin = false;
+    },
+    userAdded() {
+      this.showRegister = false;
+    },
     addToMyQuotes(id) {
       this.quotes.forEach(async quote => {
         if (quote._id == id) {
           quote.myQuote = true;
-          delete quote._id;
+          quote._id = quote._id + "MQ";
           await ApiCalls.addToMyQuotes(`user.${this.currentUser}`, quote);
         }
       });
     },
-
+    saveEditedQuote(edit) {
+      this.quotes.forEach(async quote => {
+        if (quote._id == edit.id) {
+          quote.quote = edit.quote;
+          quote.author = edit.author;
+          quote.source = edit.source;
+        }
+      });
+    },
     collectionClick() {
       this.myQuotes = false;
       this.search();

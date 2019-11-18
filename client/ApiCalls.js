@@ -42,7 +42,11 @@ class ApiCalls {
   }
 
   static async registerUser(username, password) {
-    await axios.post(`${url}/register/${username}/${password}`);
+    var result = "";
+    await axios.post(`${url}/register/${username}/${password}`).then(res => {
+      result = res.data;
+    });
+    return result;
   }
 
   static async loginUser(username, password) {

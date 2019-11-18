@@ -29,6 +29,7 @@
         <div id="messageBox">
           <div v-show="created == true">New user created!</div>
           <div v-show="error == true">Please enter a username and password...</div>
+          <div v-show="taken == true">Username already in use.</div>
         </div>
       </div>
     </div>
@@ -44,7 +45,8 @@ export default {
       username: "",
       password: "",
       created: false,
-      error: false
+      error: false,
+      taken: false
     };
   },
   methods: {
@@ -55,17 +57,19 @@ export default {
       if (this.username == "" || this.password == "") {
         this.error = true;
       } else {
-        await ApiCalls.registerUser(this.username, this.password);
-        this.error = false;
-        this.created = true;
-        await this.sleep(1000);
-        this.$emit("user-added");
-        this.$emit("user-logged-in", {
-          username: this.username,
-          password: this.password
-        });
-        this.username = "";
-        this.password = "";
+        const result = await ApiCalls.registerUser(this.username, this.password);
+        if (result == "created") {       
+          this.error = false;
+          this.taken = false;
+          this.created = true;
+          await this.sleep(1000);
+          this.$emit("user-added");
+          this.$emit("user-logged-in", this.username);
+          this.username = "";
+          this.password = "";
+        } else if (result == "taken") {
+          this.taken = true;
+        }
       }
     },
     cancelReg() {
