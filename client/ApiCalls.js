@@ -49,6 +49,10 @@ class ApiCalls {
     await axios.post(`${url}/add/${user}`, quote);
   }
 
+  static async addNewQuote(user, quote) {
+    await axios.post(`${url}/addNew/${user}`, quote);
+  }
+
   static async updateEditedQuote(user, edit) {
     await axios.put(`${url}/edit/${user}`, edit);
   }

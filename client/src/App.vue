@@ -14,8 +14,9 @@
     <input type="text" v-model="word" v-on:keyup.enter="search" />
     <br />
     <button @click="search">Search</button>
-    <button v-if="myQuotes == false" @click="randomQuote">Random</button>
-    <button v-if="myQuotes == true" @click="showAll">Show All</button>
+    <button v-if="!myQuotes" @click="randomQuote">Random</button>
+    <button v-if="myQuotes" @click="showAll">Show All</button>
+    <button v-if="myQuotes" @click="addNewQuote">Add New Quote</button>
     <br />
     <QuoteBox
       :quotes="quotes"
@@ -27,7 +28,9 @@
       @add-to-myquotes="addToMyQuotes($event)"
       @delete-quote="deleteQuote($event)"
       @edit-quote="saveEditedQuote($event)"
+      @add-quote="saveNewQuote($event)"
       @user-logged-in="userLoggedIn($event)"
+      @hide-new-quote="hideNewQuote"
       @cancel-login="cancelLogin"
     />
     <Footer
@@ -131,6 +134,15 @@ export default {
         ApiCalls.updateEditedQuote(`user.${this.currentUser}`, edit);
       });
     },
+    saveNewQuote(quote) {
+      this.addQuote = false;
+      quote.myQuote = true;
+      this.quotes.unshift(quote);
+      ApiCalls.addNewQuote(`user.${this.currentUser}`, quote);
+    },
+    addNewQuote() {
+      this.addQuote = true;
+    },
     async showAll() {
       let data = await ApiCalls.showAll(`user.${this.currentUser}`);
       this.quotes = data;
@@ -155,6 +167,9 @@ export default {
     },
     cancelLogin() {
       this.showLogin = false;
+    },
+    hideNewQuote() {
+      this.addQuote = false;
     },
     userAdded() {
       this.showRegister = false;

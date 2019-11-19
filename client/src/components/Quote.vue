@@ -5,7 +5,9 @@
         <div id="quote">{{ quote }}</div>
         <div id="author">
           <span>{{ author }}</span>
-          <span id="source" v-if="source != undefined">, {{ source }}</span>
+          <span id="source" v-if="source != undefined && source != ''"
+            >, {{ source }}</span
+          >
         </div>
         <div class="overlay" v-if="myQuote == false && loggedIn == true">
           <div class="icon" @click="addToMyQuotes">
@@ -14,8 +16,8 @@
         </div>
         <div class="overlay" v-if="myQuote == true">
           <div class="icon">
-            <span @click="editQuote">Edit </span>
-            <span @click="$emit('delete-quote')"> Delete</span>
+            <span @click="editQuote">Edit</span>
+            <span @click="$emit('delete-quote')">Delete</span>
           </div>
         </div>
       </div>
@@ -56,13 +58,13 @@ export default {
   name: "Quote",
   data() {
     return {
-      editing: false,
+      editing: this.openEdit,
       editedQuote: this.quote,
       editedAuthor: this.author,
       editedSource: this.source
     };
   },
-  props: ["quote", "author", "source", "id", "myQuote", "loggedIn", "addQuote"],
+  props: ["quote", "author", "source", "id", "myQuote", "loggedIn", "openEdit"],
   methods: {
     addToMyQuotes() {
       this.$emit("add-to-myquotes");
@@ -79,6 +81,7 @@ export default {
       this.editedQuote = this.quote;
       this.editedAuthor = this.author;
       this.editedSource = this.source;
+      this.$emit("hide-new-quote");
     },
     saveEdit() {
       this.editing = false;

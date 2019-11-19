@@ -13,11 +13,13 @@
       />
       <Quote
         v-if="addQuote == true"
-        :addQuote="addQuote"
-        :quote="''"
-        :author="''"
-        :source="''"
+        :quote="null"
+        :author="null"
+        :source="null"
         :myQuote="true"
+        :openEdit="true"
+        @edit-quote="$emit('add-quote', $event)"
+        @hide-new-quote="$emit('hide-new-quote')"
       />
       <Quote
         v-for="quote in quotes"
@@ -28,6 +30,7 @@
         :source="quote.source"
         :myQuote="quote.myQuote"
         :loggedIn="loggedIn"
+        :openEdit="false"
         @add-to-myquotes="$emit('add-to-myquotes', quote._id)"
         @delete-quote="$emit('delete-quote', quote._id)"
         @edit-quote="$emit('edit-quote', $event)"

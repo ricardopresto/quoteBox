@@ -2,6 +2,7 @@ const mongodb = require("mongodb");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const uuid = require("uuid/v4");
 
 const app = express();
 
@@ -104,10 +105,17 @@ app.post("/quotes/add/:user", async (req, res) => {
   res.send("inserted");
 });
 
+//Add new quote
+app.post("/quotes/addNew/:user", async (req, res) => {
+  const quotes = await getQuotes(req.params.user);
+  req.body._id = uuid();
+  await quotes.insertOne(req.body);
+  res.send("inserted");
+});
+
 //Update edited quote
 app.put("/quotes/edit/:user", async (req, res) => {
   const quotes = await getQuotes(req.params.user);
-  console.log(req.body);
   quotes.updateOne(
     { _id: req.body.id },
     {
