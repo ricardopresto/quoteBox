@@ -20,7 +20,7 @@ app.get("/quotes/wordsearch/:word/:user", async (req, res) => {
   const quotes = await getQuotes(req.params.user);
   const data = await quotes
     .find(
-      { quote: { $regex: req.params.word, $options: "$i" } },
+      { quote: { $regex: `\\b${req.params.word}\\b`, $options: "$i" } },
       { limit: 100 }
     )
     .toArray();
@@ -32,7 +32,7 @@ app.get("/quotes/authorsearch/:author/:user", async (req, res) => {
   const quotes = await getQuotes(req.params.user);
   const data = await quotes
     .find(
-      { author: { $regex: req.params.author, $options: "$i" } },
+      { author: { $regex: `\\b${req.params.author}\\b`, $options: "$i" } },
       { limit: 100 }
     )
     .toArray();
@@ -45,8 +45,8 @@ app.get("/quotes/combinedsearch/:word/:author/:user", async (req, res) => {
   const data = await quotes
     .find(
       {
-        quote: { $regex: req.params.word, $options: "$i" },
-        author: { $regex: req.params.author, $options: "$i" }
+        quote: { $regex: `\\b${req.params.word}\\b`, $options: "$i" },
+        author: { $regex: `\\b${req.params.author}\\b`, $options: "$i" }
       },
       { limit: 100 }
     )

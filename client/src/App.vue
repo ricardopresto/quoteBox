@@ -15,6 +15,7 @@
     <br />
     <button @click="search">Search</button>
     <button v-if="!myQuotes" @click="randomQuote">Random</button>
+    <button v-if="!myQuotes" @click="clear">Clear</button>
     <button v-if="myQuotes" @click="showAll">Show All</button>
     <button v-if="myQuotes" @click="addNewQuote">Add New Quote</button>
     <br />
@@ -64,14 +65,15 @@ export default {
       loggedIn: false,
       currentUser: "",
       myQuotes: false,
-      addQuote: false
+      addQuote: false,
+      randomSearch: false
     };
   },
   methods: {
     async randomQuote() {
       let data = await ApiCalls.getRandomQuote();
-      this.quotes = data;
-      this.currentSearch = "";
+      this.randomSearch ? this.quotes.unshift(data[0]) : (this.quotes = data);
+      this.randomSearch = true;
     },
     async search() {
       if (this.word.trim() != "" && this.author.trim() != "") {
@@ -95,6 +97,7 @@ export default {
         this.quotes = data;
       }
       this.removeDuplicates();
+      this.randomSearch = false;
     },
     removeDuplicates() {
       this.quotes.forEach(quote => {
@@ -146,6 +149,10 @@ export default {
     async showAll() {
       let data = await ApiCalls.showAll(`user.${this.currentUser}`);
       this.quotes = data;
+      this.randomSearch = false;
+    },
+    clear() {
+      this.quotes = [];
     },
     collectionClick() {
       this.myQuotes = false;
