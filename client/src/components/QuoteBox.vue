@@ -35,6 +35,12 @@
         @delete-quote="$emit('delete-quote', quote._id)"
         @edit-quote="$emit('edit-quote', $event)"
       />
+      <Quote
+        v-if="noResults == true"
+        :quote="noResultsMessage"
+        :author="noResultsAuthor"
+        :openEdit="false"
+      />
     </div>
   </div>
 </template>
@@ -50,7 +56,21 @@ export default {
     Register,
     Login
   },
-  props: ["quotes", "showRegister", "showLogin", "loggedIn", "addQuote"],
+  data() {
+    return {
+      noResultsMessage:
+        "Sorry, we couldn't find anything matching that search.",
+      noResultsAuthor: "quoteBox"
+    };
+  },
+  props: [
+    "quotes",
+    "showRegister",
+    "showLogin",
+    "loggedIn",
+    "addQuote",
+    "noResults"
+  ],
   methods: {
     addToMyQuotes(e) {
       console.log(e);

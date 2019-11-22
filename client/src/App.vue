@@ -8,10 +8,20 @@
       @logout-click="logoutClick"
     />
     <span>Author:</span>
-    <input type="text" v-model="author" v-on:keyup.enter="search" />
+    <input
+      type="text"
+      onClick="this.setSelectionRange(0, this.value.length)"
+      v-model="author"
+      v-on:keyup.enter="search"
+    />
     <br />
     <span>Word:</span>
-    <input type="text" v-model="word" v-on:keyup.enter="search" />
+    <input
+      type="text"
+      onClick="this.setSelectionRange(0, this.value.length)"
+      v-model="word"
+      v-on:keyup.enter="search"
+    />
     <br />
     <button @click="search">Search</button>
     <button v-if="!myQuotes" @click="randomQuote">Random</button>
@@ -25,6 +35,7 @@
       :showLogin="showLogin"
       :loggedIn="loggedIn"
       :addQuote="addQuote"
+      :noResults="noResults"
       @user-added="userAdded"
       @add-to-myquotes="addToMyQuotes($event)"
       @delete-quote="deleteQuote($event)"
@@ -47,6 +58,7 @@ import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import QuoteBox from "./components/QuoteBox.vue";
 import ApiCalls from "../ApiCalls.js";
+import uuid from "uuid/v4";
 
 export default {
   name: "app",
@@ -62,11 +74,12 @@ export default {
       author: "",
       showRegister: false,
       showLogin: false,
-      loggedIn: false,
-      currentUser: "",
+      loggedIn: true,
+      currentUser: "user1",
       myQuotes: false,
       addQuote: false,
-      randomSearch: false
+      randomSearch: false,
+      noResults: false
     };
   },
   methods: {
@@ -74,6 +87,7 @@ export default {
       let data = await ApiCalls.getRandomQuote();
       this.randomSearch ? this.quotes.unshift(data[0]) : (this.quotes = data);
       this.randomSearch = true;
+      this.noResults = false;
     },
     async search() {
       if (this.word.trim() != "" && this.author.trim() != "") {
@@ -95,7 +109,12 @@ export default {
           this.myQuotes ? `user.${this.currentUser}` : "main"
         );
         this.quotes = data;
+      } else {
+        return;
       }
+      this.quotes.length == 0
+        ? (this.noResults = true)
+        : (this.noResults = false);
       this.removeDuplicates();
       this.randomSearch = false;
     },
@@ -140,6 +159,7 @@ export default {
     saveNewQuote(quote) {
       this.addQuote = false;
       quote.myQuote = true;
+      quote._id = uuid();
       this.quotes.unshift(quote);
       ApiCalls.addNewQuote(`user.${this.currentUser}`, quote);
     },
@@ -150,17 +170,19 @@ export default {
       let data = await ApiCalls.showAll(`user.${this.currentUser}`);
       this.quotes = data;
       this.randomSearch = false;
+      this.noResults = false;
     },
     clear() {
       this.quotes = [];
+      this.noResults = false;
     },
     collectionClick() {
       this.myQuotes = false;
-      this.search();
+      //this.search();
     },
     myQuotesClick() {
       this.myQuotes = true;
-      this.search();
+      //this.search();
     },
     registerClick() {
       this.showRegister = true;

@@ -4,44 +4,67 @@ const url = "http://localhost:8050/quotes";
 
 class ApiCalls {
   static async getRandomQuote() {
-    var data = "";
-    await axios.get(`${url}/random`).then(res => {
-      data = res.data;
-    });
+    let data = "";
+    await axios.get(`${url}/random`).then(
+      res => {
+        data = res.data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
     return data;
   }
 
   static async showAll(user) {
-    var data = "";
-    await axios.get(`${url}/showall/${user}`).then(res => {
-      data = res.data;
-    });
+    let data = "";
+    await axios.get(`${url}/showall/${user}`).then(
+      res => {
+        data = res.data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
     return data;
   }
 
   static async wordSearch(word, user) {
-    var data = "";
-    await axios.get(`${url}/wordsearch/${word}/${user}`).then(res => {
-      data = res.data;
-    });
+    let data = "";
+    await axios.get(`${url}/wordsearch/${word}/${user}`).then(
+      res => {
+        data = res.data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
     return data;
   }
 
   static async authorSearch(author, user) {
-    var data = "";
-    await axios.get(`${url}/authorsearch/${author}/${user}`).then(res => {
-      data = res.data;
-    });
+    let data = "";
+    await axios.get(`${url}/authorsearch/${author}/${user}`).then(
+      res => {
+        data = res.data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
     return data;
   }
 
   static async combinedSearch(word, author, user) {
-    var data = "";
-    await axios
-      .get(`${url}/combinedsearch/${word}/${author}/${user}`)
-      .then(res => {
+    let data = "";
+    await axios.get(`${url}/combinedsearch/${word}/${author}/${user}`).then(
+      res => {
         data = res.data;
-      });
+      },
+      error => {
+        console.log(error);
+      }
+    );
     return data;
   }
 
@@ -62,18 +85,28 @@ class ApiCalls {
   }
 
   static async registerUser(username, password) {
-    var result = "";
-    await axios.post(`${url}/register/${username}/${password}`).then(res => {
-      result = res.data;
-    });
+    let result = "";
+    await axios.post(`${url}/register/${username}/${password}`).then(
+      res => {
+        result = res.data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
     return result;
   }
 
   static async loginUser(username, password) {
-    var result = "";
-    await axios.post(`${url}/login/${username}/${password}`).then(res => {
-      result = res.data;
-    });
+    let result = "";
+    await axios.post(`${url}/login/${username}/${password}`).then(
+      res => {
+        result = res.data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
     return result;
   }
 }
