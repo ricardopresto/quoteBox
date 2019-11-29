@@ -57,8 +57,11 @@ export default {
       if (this.username == "" || this.password == "") {
         this.error = true;
       } else {
-        const result = await ApiCalls.registerUser(this.username, this.password);
-        if (result == "created") {       
+        const result = await ApiCalls.registerUser(
+          this.username,
+          this.password
+        );
+        if (result == "created") {
           this.error = false;
           this.taken = false;
           this.created = true;
@@ -88,7 +91,7 @@ export default {
   border: 1px solid grey;
   border-radius: 8px;
   margin: 5px;
-  background-image: url("paper.jpg");
+  background-image: url("../assets/images/paper.jpg");
   display: flex;
   flex-direction: column;
   justify-content: center;

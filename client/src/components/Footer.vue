@@ -1,11 +1,7 @@
 <template>
-  <div>
-    <div id="footerContainer">
-      <button id="collection" v-if="loggedIn == true" @click="$emit('collection-click')">
-        Collection
-      </button>
-      <button id="myQuotes" v-if="loggedIn == true" @click="$emit('myquotes-click')">MyQuotes</button>
-    </div>
+  <div id="footerContainer">
+    <button id="collection" v-if="loggedIn == true" @click="$emit('collection-click')">Collection</button>
+    <button id="myQuotes" v-if="loggedIn == true" @click="$emit('myquotes-click')">MyQuotes</button>
   </div>
 </template>
 
@@ -18,10 +14,11 @@ export default {
 
 <style scoped>
 #footerContainer {
-  width: 430px;
+  width: 90%;
   height: 40px;
   margin: 8px;
   border: 1px solid grey;
+  border-radius: 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;

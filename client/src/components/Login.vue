@@ -90,7 +90,7 @@ export default {
   border: 1px solid grey;
   border-radius: 8px;
   margin: 5px;
-  background-image: url("paper.jpg");
+  background-image: url("../assets/images/paper.jpg");
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -5,9 +5,7 @@
         <div id="quote">{{ quote }}</div>
         <div id="author">
           <span>{{ author }}</span>
-          <span id="source" v-if="source != undefined && source != ''"
-            >, {{ source }}</span
-          >
+          <span id="source" v-if="source != undefined && source != ''">, {{ source }}</span>
         </div>
         <div class="overlay" v-if="myQuote == false && loggedIn == true">
           <div class="icon" @click="addToMyQuotes">
@@ -32,17 +30,9 @@
           this.scrollHeight + 'px'"
           ></textarea>
           <div class="label">Author:</div>
-          <textarea
-            class="editField"
-            ref="authorEdit"
-            v-model="editedAuthor"
-          ></textarea>
+          <textarea class="editField" ref="authorEdit" v-model="editedAuthor"></textarea>
           <div class="label">Source:</div>
-          <textarea
-            class="editField"
-            ref="sourceEdit"
-            v-model="editedSource"
-          ></textarea>
+          <textarea class="editField" ref="sourceEdit" v-model="editedSource"></textarea>
           <div id="buttons">
             <button @click="cancelEdit">Cancel</button>
             <button @click="saveEdit">Save</button>
@@ -104,7 +94,7 @@ export default {
   border-radius: 8px;
   margin: 5px;
   padding-top: 5px;
-  background-image: url("paper.jpg");
+  background-image: url("../assets/images/paper.jpg");
   position: relative;
 }
 #quote {

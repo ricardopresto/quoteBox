@@ -1,55 +1,59 @@
 <template>
   <div>
-    <Header
-      :loggedIn="loggedIn"
-      :currentUser="currentUser"
-      @register-click="registerClick"
-      @login-click="loginClick"
-      @logout-click="logoutClick"
-    />
-    <span>Author:</span>
-    <input
-      type="text"
-      onClick="this.setSelectionRange(0, this.value.length)"
-      v-model="author"
-      v-on:keyup.enter="search"
-    />
-    <br />
-    <span>Word:</span>
-    <input
-      type="text"
-      onClick="this.setSelectionRange(0, this.value.length)"
-      v-model="word"
-      v-on:keyup.enter="search"
-    />
-    <br />
-    <button @click="search">Search</button>
-    <button v-if="!myQuotes" @click="randomQuote">Random</button>
-    <button v-if="!myQuotes" @click="clear">Clear</button>
-    <button v-if="myQuotes" @click="showAll">Show All</button>
-    <button v-if="myQuotes" @click="addNewQuote">Add New Quote</button>
-    <br />
-    <QuoteBox
-      :quotes="quotes"
-      :showRegister="showRegister"
-      :showLogin="showLogin"
-      :loggedIn="loggedIn"
-      :addQuote="addQuote"
-      :noResults="noResults"
-      @user-added="userAdded"
-      @add-to-myquotes="addToMyQuotes($event)"
-      @delete-quote="deleteQuote($event)"
-      @edit-quote="saveEditedQuote($event)"
-      @add-quote="saveNewQuote($event)"
-      @user-logged-in="userLoggedIn($event)"
-      @hide-new-quote="hideNewQuote"
-      @cancel-login="cancelLogin"
-    />
-    <Footer
-      :loggedIn="loggedIn"
-      @collection-click="collectionClick"
-      @myquotes-click="myQuotesClick"
-    />
+    <div id="container">
+      <Header
+        :loggedIn="loggedIn"
+        :currentUser="currentUser"
+        @register-click="registerClick"
+        @login-click="loginClick"
+        @logout-click="logoutClick"
+      />
+      <div id="controlPanel">
+        <span>Author:</span>
+        <input
+          type="text"
+          onClick="this.setSelectionRange(0, this.value.length)"
+          v-model="author"
+          v-on:keyup.enter="search"
+        />
+        <br />
+        <span>Word:</span>
+        <input
+          type="text"
+          onClick="this.setSelectionRange(0, this.value.length)"
+          v-model="word"
+          v-on:keyup.enter="search"
+        />
+        <br />
+        <button @click="search">Search</button>
+        <button v-if="!myQuotes" @click="randomQuote">Random</button>
+        <button v-if="!myQuotes" @click="clear">Clear</button>
+        <button v-if="myQuotes" @click="showAll">Show All</button>
+        <button v-if="myQuotes" @click="addNewQuote">Add New Quote</button>
+      </div>
+      <br />
+      <QuoteBox
+        :quotes="quotes"
+        :showRegister="showRegister"
+        :showLogin="showLogin"
+        :loggedIn="loggedIn"
+        :addQuote="addQuote"
+        :noResults="noResults"
+        @user-added="userAdded"
+        @add-to-myquotes="addToMyQuotes($event)"
+        @delete-quote="deleteQuote($event)"
+        @edit-quote="saveEditedQuote($event)"
+        @add-quote="saveNewQuote($event)"
+        @user-logged-in="userLoggedIn($event)"
+        @hide-new-quote="hideNewQuote"
+        @cancel-login="cancelLogin"
+      />
+      <Footer
+        :loggedIn="loggedIn"
+        @collection-click="collectionClick"
+        @myquotes-click="myQuotesClick"
+      />
+    </div>
   </div>
 </template>
 
@@ -214,10 +218,17 @@ export default {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 </style>
 
 <style scoped>
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 button {
   margin: 8px;
   width: 120px;
