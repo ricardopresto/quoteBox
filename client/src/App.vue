@@ -31,7 +31,6 @@
         <button v-if="myQuotes" @click="showAll">Show All</button>
         <button v-if="myQuotes" @click="addNewQuote">Add New Quote</button>
       </div>
-      <br />
       <QuoteBox
         :quotes="quotes"
         :showRegister="showRegister"
@@ -227,6 +226,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+#controlPanel {
+  width: 90%;
+  border: 1px solid grey;
+  border-radius: 20px;
+  padding: 10px;
 }
 
 button {

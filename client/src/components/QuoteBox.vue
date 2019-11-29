@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="quoteBoxContainer">
     <transition name="drop">
       <Register
         v-if="showRegister == true"
@@ -81,12 +81,15 @@ export default {
 </script>
 
 <style scoped>
-#container {
+#quoteBoxContainer {
   width: 90%;
   height: 500px;
   overflow-y: scroll;
   border: 1px solid grey;
   margin: 8px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .drop-enter-active,

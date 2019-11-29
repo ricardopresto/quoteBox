@@ -1,42 +1,40 @@
 <template>
-  <div>
-    <div id="background">
-      <div v-if="editing == false">
-        <div id="quote">{{ quote }}</div>
-        <div id="author">
-          <span>{{ author }}</span>
-          <span id="source" v-if="source != undefined && source != ''">, {{ source }}</span>
-        </div>
-        <div class="overlay" v-if="myQuote == false && loggedIn == true">
-          <div class="icon" @click="addToMyQuotes">
-            <span>Add to My Quotes</span>
-          </div>
-        </div>
-        <div class="overlay" v-if="myQuote == true">
-          <div class="icon">
-            <span @click="editQuote">Edit</span>
-            <span @click="$emit('delete-quote')">Delete</span>
-          </div>
+  <div id="background">
+    <div v-if="editing == false">
+      <div id="quote">{{ quote }}</div>
+      <div id="author">
+        <span>{{ author }}</span>
+        <span id="source" v-if="source != undefined && source != ''">, {{ source }}</span>
+      </div>
+      <div class="overlay" v-if="myQuote == false && loggedIn == true">
+        <div class="icon" @click="addToMyQuotes">
+          <span>Add to My Quotes</span>
         </div>
       </div>
-      <div v-if="editing == true">
-        <div id="editBox">
-          <div class="label">Quote:</div>
-          <textarea
-            class="editField"
-            ref="quoteEdit"
-            v-model="editedQuote"
-            oninput="this.style.height=''; this.style.height =
+      <div class="overlay" v-if="myQuote == true">
+        <div class="icon">
+          <span @click="editQuote">Edit</span>
+          <span @click="$emit('delete-quote')">Delete</span>
+        </div>
+      </div>
+    </div>
+    <div v-if="editing == true">
+      <div id="editBox">
+        <div class="label">Quote:</div>
+        <textarea
+          class="editField"
+          ref="quoteEdit"
+          v-model="editedQuote"
+          oninput="this.style.height=''; this.style.height =
           this.scrollHeight + 'px'"
-          ></textarea>
-          <div class="label">Author:</div>
-          <textarea class="editField" ref="authorEdit" v-model="editedAuthor"></textarea>
-          <div class="label">Source:</div>
-          <textarea class="editField" ref="sourceEdit" v-model="editedSource"></textarea>
-          <div id="buttons">
-            <button @click="cancelEdit">Cancel</button>
-            <button @click="saveEdit">Save</button>
-          </div>
+        ></textarea>
+        <div class="label">Author:</div>
+        <textarea class="editField" ref="authorEdit" v-model="editedAuthor"></textarea>
+        <div class="label">Source:</div>
+        <textarea class="editField" ref="sourceEdit" v-model="editedSource"></textarea>
+        <div id="buttons">
+          <button @click="cancelEdit">Cancel</button>
+          <button @click="saveEdit">Save</button>
         </div>
       </div>
     </div>
@@ -88,7 +86,8 @@ export default {
 
 <style scoped>
 #background {
-  width: 400px;
+  width: 95%;
+  max-width: 450px;
   height: min-content;
   border: 1px solid grey;
   border-radius: 8px;
