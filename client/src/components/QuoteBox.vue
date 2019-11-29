@@ -1,16 +1,20 @@
 <template>
   <div>
     <div id="container">
-      <Register
-        v-if="showRegister == true"
-        @user-added="$emit('user-added')"
-        @user-logged-in="$emit('user-logged-in', $event)"
-      />
-      <Login
-        v-if="showLogin == true"
-        @user-logged-in="$emit('user-logged-in', $event)"
-        @cancel-login="$emit('cancel-login')"
-      />
+      <transition name="drop">
+        <Register
+          v-if="showRegister == true"
+          @user-added="$emit('user-added')"
+          @user-logged-in="$emit('user-logged-in', $event)"
+        />
+      </transition>
+      <transition name="drop">
+        <Login
+          v-if="showLogin == true"
+          @user-logged-in="$emit('user-logged-in', $event)"
+          @cancel-login="$emit('cancel-login')"
+        />
+      </transition>
       <Quote
         v-if="addQuote == true"
         :quote="null"
@@ -21,26 +25,30 @@
         @edit-quote="$emit('add-quote', $event)"
         @hide-new-quote="$emit('hide-new-quote')"
       />
-      <Quote
-        v-for="quote in quotes"
-        :key="quote._id"
-        :id="quote._id"
-        :quote="quote.quote"
-        :author="quote.author"
-        :source="quote.source"
-        :myQuote="quote.myQuote"
-        :loggedIn="loggedIn"
-        :openEdit="false"
-        @add-to-myquotes="$emit('add-to-myquotes', quote._id)"
-        @delete-quote="$emit('delete-quote', quote._id)"
-        @edit-quote="$emit('edit-quote', $event)"
-      />
-      <Quote
-        v-if="noResults == true"
-        :quote="noResultsMessage"
-        :author="noResultsAuthor"
-        :openEdit="false"
-      />
+      <transition-group name="drop">
+        <Quote
+          v-for="quote in quotes"
+          :key="quote._id"
+          :id="quote._id"
+          :quote="quote.quote"
+          :author="quote.author"
+          :source="quote.source"
+          :myQuote="quote.myQuote"
+          :loggedIn="loggedIn"
+          :openEdit="false"
+          @add-to-myquotes="$emit('add-to-myquotes', quote._id)"
+          @delete-quote="$emit('delete-quote', quote._id)"
+          @edit-quote="$emit('edit-quote', $event)"
+        />
+      </transition-group>
+      <transition name="drop">
+        <Quote
+          v-if="noResults == true"
+          :quote="noResultsMessage"
+          :author="noResultsAuthor"
+          :openEdit="false"
+        />
+      </transition>
     </div>
   </div>
 </template>
@@ -86,5 +94,20 @@ export default {
   overflow-y: scroll;
   border: 1px solid grey;
   margin: 8px;
+}
+
+.drop-enter-active,
+.drop-leave-active {
+  transition: all 0.2s ease-out;
+}
+
+.drop-enter {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.drop-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
 }
 </style>
