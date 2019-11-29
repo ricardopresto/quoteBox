@@ -178,17 +178,15 @@ export default {
     },
     collectionClick() {
       this.myQuotes = false;
-      //this.search();
     },
     myQuotesClick() {
       this.myQuotes = true;
-      //this.search();
     },
     registerClick() {
-      this.showRegister = true;
+      this.showLogin ? null : (this.showRegister = true);
     },
     loginClick() {
-      this.showLogin = true;
+      this.showRegister ? null : (this.showLogin = true);
     },
     logoutClick() {
       this.loggedIn = false;

@@ -78,12 +78,7 @@ export default {
     "loggedIn",
     "addQuote",
     "noResults"
-  ],
-  methods: {
-    addToMyQuotes(e) {
-      console.log(e);
-    }
-  }
+  ]
 };
 </script>
 
@@ -98,7 +93,7 @@ export default {
 
 .drop-enter-active,
 .drop-leave-active {
-  transition: all 0.2s ease-out;
+  transition: all 0.2s;
 }
 
 .drop-enter {
