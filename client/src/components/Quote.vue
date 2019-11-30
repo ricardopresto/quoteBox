@@ -1,18 +1,18 @@
 <template>
   <div id="background">
-    <div v-if="editing == false">
+    <div v-if="editing == false" id="quoteContainer">
       <div id="quote">{{ quote }}</div>
       <div id="author">
         <span>{{ author }}</span>
         <span id="source" v-if="source != undefined && source != ''">, {{ source }}</span>
       </div>
       <div class="overlay" v-if="myQuote == false && loggedIn == true">
-        <div class="icon" @click="addToMyQuotes">
+        <div id="addButton" @click="addToMyQuotes">
           <span>Add to My Quotes</span>
         </div>
       </div>
       <div class="overlay" v-if="myQuote == true">
-        <div class="icon">
+        <div id="editButton">
           <span @click="editQuote">Edit</span>
           <span @click="$emit('delete-quote')">Delete</span>
         </div>
@@ -87,7 +87,7 @@ export default {
 <style scoped>
 #background {
   width: 95%;
-  max-width: 450px;
+  max-width: 400px;
   height: min-content;
   border: 1px solid grey;
   border-radius: 8px;
@@ -96,11 +96,18 @@ export default {
   background-image: url("../assets/images/paper.jpg");
   position: relative;
 }
+#quoteContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 #quote {
   font-size: 1.1em;
   padding: 8px 20px 8px 20px;
 }
 #author {
+  max-width: 75%;
+  align-self: flex-end;
   text-align: right;
   font-size: 0.8em;
   padding: 0 20px 8px 20px;
@@ -121,11 +128,23 @@ export default {
 .overlay:hover {
   opacity: 1;
 }
-.icon {
+#addButton {
+  width: min-content;
+  white-space: nowrap;
   margin: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size: 0.8em;
+  cursor: default;
+}
+#editButton {
+  width: 80px;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   font-size: 0.8em;
   cursor: default;
 }

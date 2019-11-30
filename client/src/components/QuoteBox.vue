@@ -24,7 +24,7 @@
       @edit-quote="$emit('add-quote', $event)"
       @hide-new-quote="$emit('hide-new-quote')"
     />
-    <transition-group name="drop">
+    <transition-group name="drop" tag="div">
       <Quote
         v-for="quote in quotes"
         :key="quote._id"
@@ -87,9 +87,11 @@ export default {
   overflow-y: scroll;
   border: 1px solid grey;
   margin: 8px;
+}
+
+#quoteBoxContainer div:first-child {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
 }
 
 .drop-enter-active,

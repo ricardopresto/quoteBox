@@ -219,6 +219,10 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+
+div {
+  border: 1px solid red !important;
+}
 </style>
 
 <style scoped>
