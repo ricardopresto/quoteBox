@@ -219,10 +219,6 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-
-div {
-  border: 1px solid red !important;
-}
 </style>
 
 <style scoped>
@@ -242,6 +238,11 @@ div {
 button {
   margin: 8px;
   width: 120px;
+  height: 20px;
+  appearance: none;
+  border: 1px solid grey;
+  border-radius: 6px;
+  background-color: white;
 }
 span {
   display: inline-block;

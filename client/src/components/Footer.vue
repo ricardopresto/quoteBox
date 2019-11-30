@@ -28,5 +28,9 @@ button {
   width: 80px;
   height: 25px;
   margin: 8px;
+  appearance: none;
+  border: 1px solid grey;
+  border-radius: 10px;
+  background-color: white;
 }
 </style>
