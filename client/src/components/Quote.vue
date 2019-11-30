@@ -100,16 +100,17 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  font-family: "Cormorant Garamond", serif;
 }
 #quote {
-  font-size: 1.1em;
+  font-size: 1.2em;
   padding: 8px 20px 8px 20px;
 }
 #author {
   max-width: 75%;
   align-self: flex-end;
   text-align: right;
-  font-size: 0.8em;
+  font-size: 0.9em;
   padding: 0 20px 8px 20px;
 }
 #source {
@@ -131,22 +132,32 @@ export default {
 #addButton {
   width: min-content;
   white-space: nowrap;
-  margin: 5px;
+  margin: 5px 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
   font-size: 0.8em;
   cursor: default;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #666;
+}
+#addButton:hover {
+  color: #000;
 }
 #editButton {
   width: 80px;
-  margin: 5px;
+  margin: 5px 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   font-size: 0.8em;
   cursor: default;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #666;
+}
+#editButton span:hover {
+  color: #000;
 }
 #editBox {
   display: flex;
