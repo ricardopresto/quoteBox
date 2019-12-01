@@ -8,7 +8,7 @@
       </div>
       <div class="overlay" v-if="myQuote == false && loggedIn == true">
         <div id="addButton" @click="addToMyQuotes">
-          <span>Add to My Quotes</span>
+          <span>Add to MyQuotes</span>
         </div>
       </div>
       <div class="overlay" v-if="myQuote == true">

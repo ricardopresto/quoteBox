@@ -18,7 +18,9 @@ export default {
   height: 40px;
   margin: 8px;
   border: 1px solid grey;
-  border-radius: 20px;
+  border-radius: 10px;
+  background-color: rgb(197, 215, 255);
+  box-shadow: 0 0 10px rgb(46, 69, 104) inset;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -30,7 +32,7 @@ button {
   margin: 8px;
   appearance: none;
   border: 1px solid grey;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: white;
 }
 </style>

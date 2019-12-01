@@ -31,7 +31,7 @@
         <button v-if="myQuotes" @click="showAll">Show All</button>
         <button v-if="myQuotes" @click="addNewQuote">Add New Quote</button>
       </div>
-      <QuoteBox
+       <QuoteBox 
         :quotes="quotes"
         :showRegister="showRegister"
         :showLogin="showLogin"
@@ -233,6 +233,8 @@ export default {
   border: 1px solid grey;
   border-radius: 20px;
   padding: 10px;
+  background-color: rgb(197, 215, 255);
+  box-shadow: 0 0 20px rgb(46, 69, 104) inset;
 }
 
 button {
