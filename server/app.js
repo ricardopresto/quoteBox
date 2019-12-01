@@ -20,6 +20,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+async function getQuotes(user) {
+  return await dataBase.collection(user);
+}
+
+async function getUsers() {
+  return await dataBase.collection("users");
+}
+
 //Search by keyword
 app.get("/quotes/wordsearch/:word/:user", async (req, res) => {
   const quotes = await getQuotes(req.params.user);
@@ -75,9 +83,6 @@ app.get("/quotes/random", async (req, res) => {
 
 //Register new user
 app.post("/quotes/register/:username/:password", async (req, res) => {
-  //const client = await mongodb.MongoClient.connect(url, {
-  //  useUnifiedTopology: true
-  //});
   const users = await getUsers();
   const userArray = await users.find({}).toArray();
   let userExists = false;
@@ -148,20 +153,6 @@ app.delete("/quotes/delete/:user/:id", async (req, res) => {
   await quotes.deleteOne({ _id: req.params.id });
   res.send("deleted");
 });
-
-async function getQuotes(user) {
-  //  const client = await mongodb.MongoClient.connect(url, {
-  //    useUnifiedTopology: true
-  //  });
-  return await dataBase.collection(user);
-}
-
-async function getUsers() {
-  //  const client = await mongodb.MongoClient.connect(url, {
-  //    useUnifiedTopology: true
-  //  });
-  return await dataBase.collection("users");
-}
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

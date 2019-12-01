@@ -221,6 +221,9 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  background-image: url("./assets/images/light-wood.jpg");
+}
 button:hover {
   box-shadow: 0 0 3px rgb(46, 69, 104) inset;
 }
