@@ -89,18 +89,18 @@ export default {
   width: 95%;
   max-width: 400px;
   height: min-content;
-  border: 1px solid grey;
   border-radius: 8px;
   margin: 5px;
   padding-top: 5px;
   background-image: url("../assets/images/paper.jpg");
   position: relative;
+  box-shadow: 3px 3px 6px #777;
 }
 #quoteContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
-  font-family: 'EB Garamond', serif;
+  font-family: "EB Garamond", serif;
 }
 #quote {
   font-size: 1.2em;
@@ -138,7 +138,7 @@ export default {
   align-items: center;
   font-size: 0.8em;
   cursor: default;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   color: #666;
 }
 #addButton:hover {
@@ -153,7 +153,7 @@ export default {
   justify-content: space-between;
   font-size: 0.8em;
   cursor: default;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   color: #666;
 }
 #editButton span:hover {
