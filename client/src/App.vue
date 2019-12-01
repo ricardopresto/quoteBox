@@ -195,6 +195,7 @@ export default {
     logoutClick() {
       this.loggedIn = false;
       this.currentUser = "";
+      this.myQuotes = false;
     },
     cancelLogin() {
       this.showLogin = false;

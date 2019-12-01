@@ -1,4 +1,5 @@
 const mongodb = require("mongodb");
+const MongoClient = require("mongodb").MongoClient;
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -9,6 +10,11 @@ const port = 8050;
 
 const dbName = "quoteBox";
 const url = `mongodb+srv://ricardopresto:ricardo123@cluster0-yuyny.gcp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+let dataBase;
+MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
+  if (err) return console.log(err);
+  dataBase = client.db(dbName);
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -69,9 +75,9 @@ app.get("/quotes/random", async (req, res) => {
 
 //Register new user
 app.post("/quotes/register/:username/:password", async (req, res) => {
-  const client = await mongodb.MongoClient.connect(url, {
-    useUnifiedTopology: true
-  });
+  //const client = await mongodb.MongoClient.connect(url, {
+  //  useUnifiedTopology: true
+  //});
   const users = await getUsers();
   const userArray = await users.find({}).toArray();
   let userExists = false;
@@ -83,7 +89,7 @@ app.post("/quotes/register/:username/:password", async (req, res) => {
   if (userExists == true) {
     res.send("taken");
   } else {
-    client.db(dbName).createCollection(`user.${req.params.username}`);
+    dataBase.createCollection(`user.${req.params.username}`);
     var newUser = {
       username: req.params.username,
       password: req.params.password
@@ -144,17 +150,17 @@ app.delete("/quotes/delete/:user/:id", async (req, res) => {
 });
 
 async function getQuotes(user) {
-  const client = await mongodb.MongoClient.connect(url, {
-    useUnifiedTopology: true
-  });
-  return client.db(dbName).collection(user);
+  //  const client = await mongodb.MongoClient.connect(url, {
+  //    useUnifiedTopology: true
+  //  });
+  return await dataBase.collection(user);
 }
 
 async function getUsers() {
-  const client = await mongodb.MongoClient.connect(url, {
-    useUnifiedTopology: true
-  });
-  return client.db(dbName).collection("users");
+  //  const client = await mongodb.MongoClient.connect(url, {
+  //    useUnifiedTopology: true
+  //  });
+  return await dataBase.collection("users");
 }
 
 app.listen(port, () => {
