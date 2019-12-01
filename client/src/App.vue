@@ -9,19 +9,19 @@
         @logout-click="logoutClick"
       />
       <div id="controlPanel">
-        <span>Author:</span>
-        <input
-          type="text"
-          onClick="this.setSelectionRange(0, this.value.length)"
-          v-model="author"
-          v-on:keyup.enter="search"
-        />
-        <br />
         <span>Word:</span>
         <input
           type="text"
           onClick="this.setSelectionRange(0, this.value.length)"
           v-model="word"
+          v-on:keyup.enter="search"
+        />
+        <br />
+        <span>Author:</span>
+        <input
+          type="text"
+          onClick="this.setSelectionRange(0, this.value.length)"
+          v-model="author"
           v-on:keyup.enter="search"
         />
         <br />
@@ -235,6 +235,8 @@ export default {
   padding: 10px;
   background-color: rgb(197, 215, 255);
   box-shadow: 0 0 20px rgb(46, 69, 104) inset;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
 }
 
 button {
@@ -250,5 +252,6 @@ span {
   display: inline-block;
   margin: 8px;
   width: 60px;
+  text-align: right;
 }
 </style>

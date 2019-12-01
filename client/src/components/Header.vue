@@ -1,6 +1,6 @@
 <template>
   <div id="headerContainer">
-    <div id="usernameDisplay" v-if="loggedIn">Logged in as: {{currentUser}}</div>
+    <div id="usernameDisplay" v-if="loggedIn"><i class="fas fa-user"></i>{{currentUser}}</div>
     <button id="register" v-if="!loggedIn" @click="$emit('register-click')">Register</button>
     <button id="login" v-if="!loggedIn" @click="$emit('login-click')">Log In</button>
     <button id="logout" v-if="loggedIn" @click="$emit('logout-click')">Log Out</button>
@@ -34,6 +34,8 @@ export default {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
 }
 button {
   width: 80px;
@@ -43,5 +45,8 @@ button {
   border: 1px solid grey;
   border-radius: 8px;
   background-color: white;
+}
+i {
+  margin-right: 5px;
 }
 </style>
