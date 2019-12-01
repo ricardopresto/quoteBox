@@ -1,9 +1,15 @@
 <template>
   <div id="headerContainer">
-    <div id="usernameDisplay" v-if="loggedIn"><i class="fas fa-user"></i>{{currentUser}}</div>
-    <button id="register" v-if="!loggedIn" @click="$emit('register-click')">Register</button>
-    <button id="login" v-if="!loggedIn" @click="$emit('login-click')">Log In</button>
-    <button id="logout" v-if="loggedIn" @click="$emit('logout-click')">Log Out</button>
+    <div id="title">quoteBox</div>
+    <div id="headerControls">
+      <div id="usernameDisplay" v-if="loggedIn">
+        <i class="fas fa-user"></i>
+        {{currentUser}}
+      </div>
+      <button id="register" v-if="!loggedIn" @click="$emit('register-click')">Register</button>
+      <button id="login" v-if="!loggedIn" @click="$emit('login-click')">Log In</button>
+      <button id="logout" v-if="loggedIn" @click="$emit('logout-click')">Log Out</button>
+    </div>
   </div>
 </template>
 
@@ -32,10 +38,15 @@ export default {
   box-shadow: 0 0 10px rgb(46, 69, 104) inset;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: space-between;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.9em;
+}
+#headerControls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 button {
   width: 80px;
@@ -48,5 +59,10 @@ button {
 }
 i {
   margin-right: 5px;
+}
+#title {
+  font-family: "Molle", cursive;
+  font-size: 2em;
+  padding: 0 10px;
 }
 </style>

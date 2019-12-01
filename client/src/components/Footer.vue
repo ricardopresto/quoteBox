@@ -1,14 +1,24 @@
 <template>
   <div id="footerContainer">
-    <button id="collection" v-if="loggedIn == true" @click="$emit('collection-click')">Collection</button>
-    <button id="myQuotes" v-if="loggedIn == true" @click="$emit('myquotes-click')">MyQuotes</button>
+    <button
+      id="collection"
+      v-if="loggedIn == true"
+      :class="{ selected: !myQuotes }"
+      @click="$emit('collection-click')"
+    >Collection</button>
+    <button
+      id="myQuotes"
+      v-if="loggedIn == true"
+      :class="{ selected: myQuotes }"
+      @click="$emit('myquotes-click')"
+    >MyQuotes</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "Footer",
-  props: ["loggedIn"]
+  props: ["loggedIn", "myQuotes"]
 };
 </script>
 
@@ -34,5 +44,8 @@ button {
   border: 1px solid grey;
   border-radius: 8px;
   background-color: white;
+}
+.selected {
+  box-shadow: 0 0 8px rgb(46, 69, 104) inset;
 }
 </style>

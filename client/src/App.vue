@@ -31,7 +31,7 @@
         <button v-if="myQuotes" @click="showAll">Show All</button>
         <button v-if="myQuotes" @click="addNewQuote">Add New Quote</button>
       </div>
-       <QuoteBox 
+      <QuoteBox
         :quotes="quotes"
         :showRegister="showRegister"
         :showLogin="showLogin"
@@ -49,6 +49,7 @@
       />
       <Footer
         :loggedIn="loggedIn"
+        :myQuotes="myQuotes"
         @collection-click="collectionClick"
         @myquotes-click="myQuotesClick"
       />
@@ -218,6 +219,9 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+button:hover {
+  box-shadow: 0 0 3px rgb(46, 69, 104) inset;
 }
 </style>
 
