@@ -18,24 +18,22 @@
         </div>
       </div>
     </div>
-    <div v-if="editing == true">
-      <div id="editBox">
-        <div class="label">Quote:</div>
-        <textarea
-          class="editField"
-          ref="quoteEdit"
-          v-model="editedQuote"
-          oninput="this.style.height=''; this.style.height =
+    <div v-if="editing == true" id="editBox">
+      <div class="label">Quote:</div>
+      <textarea
+        class="editField"
+        ref="quoteEdit"
+        v-model="editedQuote"
+        oninput="this.style.height=''; this.style.height =
           this.scrollHeight + 'px'"
-        ></textarea>
-        <div class="label">Author:</div>
-        <textarea class="editField" ref="authorEdit" v-model="editedAuthor"></textarea>
-        <div class="label">Source:</div>
-        <textarea class="editField" ref="sourceEdit" v-model="editedSource"></textarea>
-        <div id="buttons">
-          <button @click="cancelEdit">Cancel</button>
-          <button @click="saveEdit">Save</button>
-        </div>
+      ></textarea>
+      <div class="label">Author:</div>
+      <textarea class="editField" ref="authorEdit" v-model="editedAuthor"></textarea>
+      <div class="label">Source:</div>
+      <textarea class="editField" ref="sourceEdit" v-model="editedSource"></textarea>
+      <div id="buttons">
+        <button @click="cancelEdit">Cancel</button>
+        <button @click="saveEdit">Save</button>
       </div>
     </div>
   </div>
@@ -160,6 +158,7 @@ export default {
   color: #000;
 }
 #editBox {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,17 +167,24 @@ export default {
   width: 90%;
   margin: 10px;
   padding: 5px;
+  border-radius: 6px;
   resize: none;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 1em;
+  font-family: "EB Garamond", serif;
+  font-size: 1.2em;
 }
 .label {
   margin-left: 15px;
   align-self: flex-start;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
 }
 button {
-  width: 80px;
-  height: 25px;
-  margin: 5px;
+  margin: 8px;
+  width: 100px;
+  height: 20px;
+  appearance: none;
+  border: 1px solid grey;
+  border-radius: 6px;
+  background-color: white;
 }
 </style>

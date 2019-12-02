@@ -85,16 +85,20 @@ export default {
 
 <style scoped>
 #container {
-  width: 400px;
+  width: 95%;
+  max-width: 400px;
   height: 200px;
   border: 1px solid grey;
   border-radius: 8px;
+  box-shadow: 3px 3px 6px #777;
   margin: 5px;
   background-image: url("../assets/images/paper.jpg");
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
 }
 #form {
   display: flex;
@@ -111,10 +115,16 @@ input {
   margin-left: 8px;
 }
 button {
-  width: 80px;
   margin: 8px;
+  width: 100px;
+  height: 20px;
+  appearance: none;
+  border: 1px solid grey;
+  border-radius: 6px;
+  background-color: white;
 }
 #messageBox {
   height: 20px;
+  padding-top: 5px;
 }
 </style>
