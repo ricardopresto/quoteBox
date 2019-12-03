@@ -83,7 +83,7 @@ export default {
 <style scoped>
 #quoteBoxContainer {
   width: 90vw;
-  height: 64vh;
+  height: 70vh;
   overflow-y: scroll;
   border: 1px solid #ddd;
   margin: 8px;

@@ -24,12 +24,13 @@
           v-model="author"
           v-on:keyup.enter="search"
         />
-        <br />
-        <button @click="search">Search</button>
-        <button v-if="!myQuotes" @click="randomQuote">Random</button>
-        <button v-if="!myQuotes" @click="clear">Clear</button>
-        <button v-if="myQuotes" @click="showAll">Show All</button>
-        <button v-if="myQuotes" @click="addNewQuote">Add New Quote</button>
+        <div id="buttons">
+          <button @click="search">Search</button>
+          <button v-if="!myQuotes" @click="randomQuote">Random</button>
+          <button v-if="!myQuotes" @click="clear">Clear</button>
+          <button v-if="myQuotes" @click="showAll">Show All</button>
+          <button v-if="myQuotes" @click="addNewQuote">New Quote</button>
+        </div>
       </div>
       <QuoteBox
         :quotes="quotes"
@@ -78,8 +79,8 @@ export default {
       author: "",
       showRegister: false,
       showLogin: false,
-      loggedIn: true,
-      currentUser: "user1",
+      loggedIn: false,
+      currentUser: "",
       myQuotes: false,
       addQuote: false,
       randomSearch: false,
@@ -182,9 +183,11 @@ export default {
     },
     collectionClick() {
       this.myQuotes = false;
+      this.clear();
     },
     myQuotesClick() {
       this.myQuotes = true;
+      this.showAll();
     },
     registerClick() {
       this.showLogin ? null : (this.showRegister = true);
@@ -235,7 +238,6 @@ button:hover {
   flex-direction: column;
   align-items: center;
 }
-
 #controlPanel {
   width: 90%;
   border: 1px solid grey;
@@ -246,7 +248,9 @@ button:hover {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.9em;
 }
-
+#buttons {
+  display: inline-block;
+}
 button {
   margin: 8px;
   width: 120px;
@@ -261,5 +265,25 @@ span {
   margin: 8px;
   width: 60px;
   text-align: right;
+}
+input {
+  margin-right: 20px;
+  padding: 2px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 484px) {
+  button {
+    width: 74px;
+    margin: 8px 4px;
+  }
+  span {
+    width: 50px;
+    margin: 8px 4px;
+  }
+  input {
+    margin-right: 0;
+  }
 }
 </style>

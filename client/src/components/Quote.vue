@@ -162,6 +162,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 5px 0;
 }
 .editField {
   width: 90%;
@@ -180,7 +181,7 @@ export default {
 }
 button {
   margin: 8px;
-  width: 100px;
+  width: 80px;
   height: 20px;
   appearance: none;
   border: 1px solid grey;

@@ -7,20 +7,14 @@
           <input
             type="text"
             name="username"
-            placeholder="Enter Username..."
+            maxlength="10"
             v-model="username"
             @keyup.enter="registerUser"
           />
         </div>
         <div class="input">
           <label for="password">Password:</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter Password..."
-            v-model="password"
-            @keyup.enter="registerUser"
-          />
+          <input type="password" name="password" v-model="password" @keyup.enter="registerUser" />
         </div>
         <div>
           <button @click="cancelReg">Cancel</button>
@@ -114,12 +108,14 @@ export default {
 }
 input {
   border: 1px solid grey;
-  width: 200px;
+  border-radius: 4px;
+  width: 140px;
   margin-left: 8px;
+  padding: 2px;
 }
 button {
   margin: 8px;
-  width: 100px;
+  width: 80px;
   height: 20px;
   appearance: none;
   border: 1px solid grey;

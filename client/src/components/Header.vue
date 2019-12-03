@@ -65,4 +65,25 @@ i {
   font-size: 2em;
   padding: 0 10px;
 }
+
+@media screen and (max-width: 484px) {
+  #headerContainer {
+    padding: 0 5px;
+  }
+  #usernameDisplay {
+    font-size: 0.7em;
+  }
+  #title {
+    font-size: 1.4em;
+    padding: 5px;
+  }
+  button {
+    height: 20px;
+    width: 70px;
+    margin: 8px 4px;
+  }
+  i {
+    margin-right: 0;
+  }
+}
 </style>
