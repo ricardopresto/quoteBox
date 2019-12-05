@@ -253,7 +253,7 @@ button:hover {
 }
 button {
   margin: 8px;
-  width: 120px;
+  width: 110px;
   height: 20px;
   appearance: none;
   border: 1px solid grey;
@@ -273,7 +273,7 @@ input {
   border-radius: 4px;
 }
 
-@media screen and (max-width: 484px) {
+@media screen and (max-width: 462px) {
   button {
     width: 74px;
     margin: 8px 4px;

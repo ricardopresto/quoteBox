@@ -57,33 +57,32 @@ button {
   border-radius: 8px;
   background-color: white;
 }
-i {
-  margin-right: 5px;
-}
 #title {
   font-family: "Molle", cursive;
   font-size: 2em;
   padding: 0 10px;
 }
 
-@media screen and (max-width: 484px) {
+@media screen and (max-width: 462px) {
   #headerContainer {
+    height: 65px;
+  }
+  #title {
+    font-size: 1.8em;
     padding: 0 5px;
   }
   #usernameDisplay {
-    font-size: 0.7em;
+    font-size: 0.9em;
+    padding-top: 5px;
   }
-  #title {
-    font-size: 1.4em;
-    padding: 5px;
+  #headerControls {
+    flex-direction: column;
+    justify-content: space-around;
   }
   button {
-    height: 20px;
+    height: 24px;
     width: 70px;
-    margin: 8px 4px;
-  }
-  i {
-    margin-right: 0;
+    margin: 2px 8px;
   }
 }
 </style>

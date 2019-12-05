@@ -14,16 +14,18 @@
         @cancel-login="$emit('cancel-login')"
       />
     </transition>
-    <Quote
-      v-if="addQuote == true"
-      :quote="null"
-      :author="null"
-      :source="null"
-      :myQuote="true"
-      :openEdit="true"
-      @edit-quote="$emit('add-quote', $event)"
-      @hide-new-quote="$emit('hide-new-quote')"
-    />
+    <transition name="drop">
+      <Quote
+        v-if="addQuote == true"
+        :quote="null"
+        :author="null"
+        :source="null"
+        :myQuote="true"
+        :openEdit="true"
+        @edit-quote="$emit('add-quote', $event)"
+        @hide-new-quote="$emit('hide-new-quote')"
+      />
+    </transition>
     <transition-group name="drop" tag="div">
       <Quote
         v-for="quote in quotes"
@@ -89,7 +91,7 @@ export default {
   margin: 8px;
 }
 
-#quoteBoxContainer div:first-child {
+#quoteBoxContainer div {
   display: flex;
   flex-flow: row wrap;
 }
