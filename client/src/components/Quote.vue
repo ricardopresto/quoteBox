@@ -11,7 +11,7 @@
           <span>Add to MyQuotes</span>
         </div>
       </div>
-      <div class="overlay" v-if="myQuote == true">
+      <div class="overlay" v-if="myQuote == true || loggedInAsAdmin == true">
         <div id="editButton">
           <span @click="editQuote">Edit</span>
           <span @click="$emit('delete-quote')">Delete</span>
@@ -50,7 +50,16 @@ export default {
       editedSource: this.source
     };
   },
-  props: ["quote", "author", "source", "id", "myQuote", "loggedIn", "openEdit"],
+  props: [
+    "quote",
+    "author",
+    "source",
+    "id",
+    "myQuote",
+    "loggedIn",
+    "loggedInAsAdmin",
+    "openEdit"
+  ],
   methods: {
     addToMyQuotes() {
       this.$emit("add-to-myquotes");

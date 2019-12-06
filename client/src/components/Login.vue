@@ -65,6 +65,14 @@ export default {
           this.$emit("user-logged-in", this.username);
           this.username = "";
           this.password = "";
+        } else if (result == "login-admin") {
+          this.error = false;
+          this.incorrect = false;
+          this.success = true;
+          await this.sleep(1000);
+          this.$emit("login-admin", this.username);
+          this.username = "";
+          this.password = "";
         }
       }
     },

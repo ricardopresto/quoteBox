@@ -28,6 +28,10 @@ async function getUsers() {
   return await dataBase.collection("users");
 }
 
+async function getAdmin() {
+  return await dataBase.collection("admin");
+}
+
 //Search by keyword
 app.get("/quotes/wordsearch/:word/:user", async (req, res) => {
   const quotes = await getQuotes(req.params.user);
@@ -107,8 +111,15 @@ app.post("/quotes/register/:username/:password", async (req, res) => {
 //Login user
 app.post("/quotes/login/:username/:password", async (req, res) => {
   const users = await getUsers();
+  let admin = await getAdmin();
+  admin = await admin.find({}).toArray();
   const user = await users.find({ username: req.params.username }).toArray();
-  if (user.length == 0) {
+  if (
+    req.params.username == admin[0].username &&
+    req.params.password == admin[0].password
+  ) {
+    res.send("login-admin");
+  } else if (user.length == 0) {
     res.send("fail");
   } else if (user[0].password == req.params.password) {
     res.send("success");
@@ -135,7 +146,12 @@ app.post("/quotes/addNew/:user", async (req, res) => {
 app.put("/quotes/edit/:user", async (req, res) => {
   const quotes = await getQuotes(req.params.user);
   quotes.updateOne(
-    { _id: req.body.id },
+    {
+      _id:
+        req.params.user == "main"
+          ? new mongodb.ObjectID(req.body.id)
+          : req.body.id
+    },
     {
       $set: {
         quote: req.body.quote,
@@ -147,10 +163,15 @@ app.put("/quotes/edit/:user", async (req, res) => {
   res.send("updated");
 });
 
-//Delete from user collection
+//Delete from collection
 app.delete("/quotes/delete/:user/:id", async (req, res) => {
   const quotes = await getQuotes(req.params.user);
-  await quotes.deleteOne({ _id: req.params.id });
+  await quotes.deleteOne({
+    _id:
+      req.params.user == "main"
+        ? new mongodb.ObjectID(req.params.id)
+        : req.params.id
+  });
   res.send("deleted");
 });
 

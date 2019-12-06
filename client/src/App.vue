@@ -37,6 +37,7 @@
         :showRegister="showRegister"
         :showLogin="showLogin"
         :loggedIn="loggedIn"
+        :loggedInAsAdmin="loggedInAsAdmin"
         :addQuote="addQuote"
         :noResults="noResults"
         @user-added="userAdded"
@@ -45,6 +46,7 @@
         @edit-quote="saveEditedQuote($event)"
         @add-quote="saveNewQuote($event)"
         @user-logged-in="userLoggedIn($event)"
+        @login-admin="loginAdmin($event)"
         @hide-new-quote="hideNewQuote"
         @cancel-login="cancelLogin"
       />
@@ -80,6 +82,7 @@ export default {
       showRegister: false,
       showLogin: false,
       loggedIn: false,
+      loggedInAsAdmin: false,
       currentUser: "",
       myQuotes: false,
       addQuote: false,
@@ -120,7 +123,7 @@ export default {
       this.quotes.length == 0
         ? (this.noResults = true)
         : (this.noResults = false);
-      this.removeDuplicates();
+      this.loggedInAsAdmin ? null : this.removeDuplicates();
       this.randomSearch = false;
     },
     removeDuplicates() {
@@ -149,7 +152,10 @@ export default {
       this.quotes = this.quotes.filter(quote => {
         return quote._id != id;
       });
-      ApiCalls.deleteFromMyQuotes(`user.${this.currentUser}`, id);
+      ApiCalls.deleteFromMyQuotes(
+        this.loggedInAsAdmin ? "main" : `user.${this.currentUser}`,
+        id
+      );
     },
     saveEditedQuote(edit) {
       this.quotes.forEach(quote => {
@@ -157,8 +163,11 @@ export default {
           quote.quote = edit.quote;
           quote.author = edit.author;
           quote.source = edit.source;
+          ApiCalls.updateEditedQuote(
+            this.loggedInAsAdmin ? "main" : `user.${this.currentUser}`,
+            edit
+          );
         }
-        ApiCalls.updateEditedQuote(`user.${this.currentUser}`, edit);
       });
     },
     saveNewQuote(quote) {
@@ -197,6 +206,7 @@ export default {
     },
     logoutClick() {
       this.loggedIn = false;
+      this.loggedInAsAdmin = false;
       this.currentUser = "";
       this.myQuotes = false;
     },
@@ -211,6 +221,12 @@ export default {
     },
     userLoggedIn(username) {
       this.showLogin = false;
+      this.currentUser = username;
+      this.loggedIn = true;
+    },
+    loginAdmin(username) {
+      this.showLogin = false;
+      this.loggedInAsAdmin = true;
       this.currentUser = username;
       this.loggedIn = true;
     }

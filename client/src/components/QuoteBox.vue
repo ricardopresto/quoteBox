@@ -11,6 +11,7 @@
       <Login
         v-if="showLogin == true"
         @user-logged-in="$emit('user-logged-in', $event)"
+        @login-admin="$emit('login-admin', $event)"
         @cancel-login="$emit('cancel-login')"
       />
     </transition>
@@ -36,6 +37,7 @@
         :source="quote.source"
         :myQuote="quote.myQuote"
         :loggedIn="loggedIn"
+        :loggedInAsAdmin="loggedInAsAdmin"
         :openEdit="false"
         @add-to-myquotes="$emit('add-to-myquotes', quote._id)"
         @delete-quote="$emit('delete-quote', quote._id)"
@@ -76,6 +78,7 @@ export default {
     "showRegister",
     "showLogin",
     "loggedIn",
+    "loggedInAsAdmin",
     "addQuote",
     "noResults"
   ]
