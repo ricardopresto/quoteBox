@@ -172,10 +172,13 @@ export default {
     },
     saveNewQuote(quote) {
       this.addQuote = false;
-      quote.myQuote = true;
-      quote._id = uuid();
+      this.loggedInAsAdmin ? (quote.myQuote = false) : (quote.myQuote = true);
+      this.loggedInAsAdmin ? null : (quote._id = uuid());
       this.quotes.unshift(quote);
-      ApiCalls.addNewQuote(`user.${this.currentUser}`, quote);
+      ApiCalls.addNewQuote(
+        this.loggedInAsAdmin ? "main" : `user.${this.currentUser}`,
+        quote
+      );
     },
     addNewQuote() {
       this.addQuote = true;
