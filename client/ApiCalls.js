@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:8050/quotes";
+const url = "quotes";
 
 class ApiCalls {
   static async getRandomQuote() {

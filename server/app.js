@@ -6,7 +6,12 @@ const cors = require("cors");
 
 const app = express();
 
-const port = 8050;
+const port = process.env.PORT || 8080;
+
+if (process.env.NODE_ENV == "production") {
+  app.use(express.static(__dirname + "/public/"));
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
+}
 
 const dbName = "quoteBox";
 const url = `mongodb+srv://ricardopresto:ricardo123@cluster0-yuyny.gcp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
