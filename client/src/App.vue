@@ -100,20 +100,20 @@ export default {
     async search() {
       if (this.word.trim() != "" && this.author.trim() != "") {
         let data = await ApiCalls.combinedSearch(
-          this.word,
-          this.author,
+          this.word.trim(),
+          this.author.trim(),
           this.myQuotes ? `user.${this.currentUser}` : "main"
         );
         this.quotes = data;
       } else if (this.word.trim() != "") {
         let data = await ApiCalls.wordSearch(
-          this.word,
+          this.word.trim(),
           this.myQuotes ? `user.${this.currentUser}` : "main"
         );
         this.quotes = data;
       } else if (this.author.trim() != "") {
         let data = await ApiCalls.authorSearch(
-          this.author,
+          this.author.trim(),
           this.myQuotes ? `user.${this.currentUser}` : "main"
         );
         this.quotes = data;
