@@ -6,7 +6,7 @@ const cors = require("cors");
 
 const app = express();
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8050;
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(__dirname + "/public/"));
