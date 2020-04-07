@@ -4,11 +4,17 @@
     <div id="headerControls">
       <div id="usernameDisplay" v-if="loggedIn">
         <i class="fas fa-user"></i>
-        {{currentUser}}
+        {{ currentUser }}
       </div>
-      <button id="register" v-if="!loggedIn" @click="$emit('register-click')">Register</button>
-      <button id="login" v-if="!loggedIn" @click="$emit('login-click')">Log In</button>
-      <button id="logout" v-if="loggedIn" @click="$emit('logout-click')">Log Out</button>
+      <button id="register" v-if="!loggedIn" @click="$emit('register-click')">
+        Register
+      </button>
+      <button id="login" v-if="!loggedIn" @click="$emit('login-click')">
+        Log In
+      </button>
+      <button id="logout" v-if="loggedIn" @click="$emit('logout-click')">
+        Log Out
+      </button>
     </div>
   </div>
 </template>
@@ -59,6 +65,10 @@ button {
 }
 #title {
   font-family: "Molle", cursive;
+  font-weight: 400;
+  font-style: italic;
+  font-weight: 400;
+  font-style: italic;
   font-size: 2em;
   padding: 0 10px;
 }
